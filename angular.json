@@ -23,7 +23,11 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input" : "src/stpstyles.scss"
+              },
               "src/styles.css"
+             
             ],
             "scripts": []
           },

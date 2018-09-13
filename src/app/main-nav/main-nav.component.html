@@ -1,0 +1,67 @@
+<mat-toolbar color="primary" class="navbar-header mat-elevation-z6">
+  <a mat-button routerLink=".">STP</a>
+
+  <button mat-icon-button [matMenuTriggerFor]="setup1">
+    Setup
+  </button>
+
+  <ul *ngFor="let obj of menudata">
+    <li *ngFor="let parent_menu of obj.parent_menu">
+      <button mat-icon-button [matMenuTriggerFor]="setup1">
+       {{parent_menu.name}}
+      </button>
+    </li>
+  </ul>
+
+
+
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>apps</mat-icon>
+  </button>
+
+
+</mat-toolbar>
+
+
+
+<mat-menu #menu="matMenu">
+  <a mat-menu-item routerLink="/role">
+    <mat-icon>supervisor_account</mat-icon>
+    <span>Role</span>
+  </a>
+  <a mat-menu-item  routerLink="/menu">
+    <mat-icon>menu</mat-icon>
+    <span>Menu</span>
+  </a>
+  <a mat-menu-item routerLink="/user">
+    <mat-icon>account_box</mat-icon>
+    <span>User</span>
+  </a>
+</mat-menu>
+
+<mat-menu #setup1="matMenu">
+  <button mat-menu-item>
+    <mat-icon>business</mat-icon>
+    <span>Company</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>menu</mat-icon>
+    <span>Township</span>
+  </button>
+</mat-menu>
+
+<mat-menu #setup="matMenu">
+
+  <button mat-menu-item *ngFor="let obj of menudata">
+    <mat-icon>{{obj.icon_name}}</mat-icon>
+    <span>{{obj.name}}</span>
+  </button>
+</mat-menu>
+
+
+

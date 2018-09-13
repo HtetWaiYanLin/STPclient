@@ -1,0 +1,38 @@
+<div class="menu-container">
+
+  <h3>Menu</h3>
+  <div class="button-row">
+    <button mat-raised-button color="primary">New</button>
+    <button mat-raised-button color="primary">Save</button>
+    <button mat-raised-button color="accent">Delete</button>
+    <button mat-raised-button color="primary" (click)="goList()" >List</button>
+  </div>
+
+
+  <form class="menu-form">
+
+    <mat-radio-group>
+      <mat-radio-button value="1" color="primary"> Main Menu</mat-radio-button>
+      <mat-radio-button value="2" color="primary"> Child Menu</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field class="menu-full-width">
+      <mat-select placeholder="Main Menu">
+        <mat-option value="option">System</mat-option>
+        <mat-option value="option">Setup</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="menu-full-width">
+      <input matInput placeholder="Menu Link">
+    </mat-form-field>
+
+
+    <mat-form-field class="menu-full-width">
+      <input matInput placeholder="Menu Name">
+    </mat-form-field>
+  </form>
+
+
+
+</div>
