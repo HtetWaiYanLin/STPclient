@@ -1,0 +1,51 @@
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  
+
+  .button-row button,
+  .button-row a {
+    margin-right: 8px;
+  }
+
+  .menu-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  .menu-full-width {
+    width: 100%;
+  }
+  
+ .mat-radio-button {
+    padding-right: 16px;
+  }
+   
+
+  .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    color:white;
+}
+
+
+
+.example-section {
+  display: flex;
+  align-content: left;
+  align-items: left;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.user-divider {
+  margin-top:  15px;
+}
+
