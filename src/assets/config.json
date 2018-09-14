@@ -1,6 +1,6 @@
 {
-"appname" : "Ng Training",
-"title" : "NgTraining version 1.0.5", 
-"apiurl" : "http://localhost:8080/NgTrain/module001/", 
-"imageurl" : "http://localhost:8080/NgTrain/WEB-INF/upload/"
+"appname" : "S T P",
+"title" : "S T P version 1.0.0", 
+"apiurl" : "http://localhost:8085/stpserver/module001/", 
+"imageurl" : "http://localhost:8085/stpserver/WEB-INF/upload/"
 }

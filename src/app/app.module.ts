@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SystemService } from './system/system.service';
+
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -124,7 +127,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FlexLayoutModule
   ],
-  providers: [Reference],
+  providers: [Reference, SystemService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

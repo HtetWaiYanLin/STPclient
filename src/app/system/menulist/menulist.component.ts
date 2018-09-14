@@ -13,8 +13,8 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 })
 
 export class MenulistComponent implements OnInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
-  exampleDatabase: ExampleHttpDao | null;
+  displayedColumns: string[] = ['Code', 'Name', 'Link', 'Parent_Menu'];
+  exampleDatabase: MenuList | null;
   data: GithubIssue[] = [];
 
   resultsLength = 0;
@@ -24,10 +24,17 @@ export class MenulistComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient, private _router: Router) { }
+  _start = 0;
+  _end = 10;
+  _pageIndex = 1;
+
+
+  constructor(private http: HttpClient, private _router: Router) {
+
+  }
 
   ngOnInit() {
-    this.exampleDatabase = new ExampleHttpDao(this.http);
+    this.exampleDatabase = new MenuList(this.http);
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -36,17 +43,30 @@ export class MenulistComponent implements OnInit {
       .pipe(
         startWith({}),
         switchMap(() => {
+          if (this.paginator.pageIndex === 0) {
+            this._start = 0;
+            this._end = 10;
+            this._pageIndex = this.paginator.pageIndex;
+          } else if (this.paginator.pageIndex === this._pageIndex + 1) {
+            this._start = this._end + 1;
+            this._end = this._end + 10;
+            this._pageIndex = this.paginator.pageIndex;
+          } else if (this.paginator.pageIndex === this._pageIndex - 1) {
+            this._start = this._start - 10;
+            this._end = this._end - 10;
+            this._pageIndex = this.paginator.pageIndex;
+          }
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.exampleDatabase!.getMenuList(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this._start, this._end);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
-          this.resultsLength = data.total_count;
-
-          return data.items;
+          this.resultsLength = data.totalCount;
+          console.log(JSON.stringify(data));
+          return data.data;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -92,3 +112,16 @@ export class ExampleHttpDao {
     return this.http.get<GithubApi>(requestUrl);
   }
 }
+
+export class MenuList {
+  constructor(private http: HttpClient) { }
+
+  getMenuList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
+    const href = 'http://localhost:8085/stpserver/module001/service001/getmenulist';
+    const requestUrl =
+      `${href}?sort=${sort}&order=${order}&page=${page + 1}&start=${start}&end=${end}`;
+
+    return this.http.get<any>(requestUrl);
+  }
+}
+

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 
 import { IntercomService } from './framework/intercom.service';
 import { Reference } from './framework/reference';
@@ -25,6 +26,7 @@ export class AppComponent {
 
   getAppinfo(): void {
     this.getAppdata().subscribe(data => {
+      console.log(JSON.stringify('Server Data ' + data));
       this.myData = data;
       this.ics._title = this.myData.title;
       this.ics._appname = this.myData.appname;
@@ -49,6 +51,7 @@ export class AppComponent {
   getMockData(): Observable<any> {
     return this.http.get<any>('assets/lov3.json?random=' + Math.random());
   }
+
 }
 export interface AppData {
   _title: string;
