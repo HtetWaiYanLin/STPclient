@@ -1,0 +1,26 @@
+{
+    "temp" : [
+        {"dbname":"Field Name","caption":"UI Name","type":"string","condition":"c","t1":"","t2":"","t3":""},
+        {"dbname":"Field Name","caption":"UI Name","type":"numeric","condition":"eq","t1":"","t2":"","t3":""},
+        {"dbname":"Field Name","caption":"UI Name","type":"date","condition":"eq","t1":"","t2":"","t3":""},
+        {"dbname":"Field Name","caption":"UI Name","type":"combo","condition":"","t1":"","t2":"","t3":""}
+    ],
+    "property1": [
+        {"dbname":"t1","caption":"Listing No","type":"string","condition":"c","t1":"","t2":"","t3":""},
+        {"dbname":"n4","caption":"Type","type":"combo001","condition":"","t1":"","t2":"","t3":""},
+        {"dbname":"n3","caption":"Status","type":"combo003","condition":"","t1":"","t2":"","t3":""},
+        {"dbname":"t5","caption":"Price","type":"numeric","condition":"eq","t1":"","t2":"","t3":""},
+        {"dbname":"t6","caption":"Available From","type":"date","condition":"eq","t1":"","t2":"","t3":""},
+        {"dbname":"t26","caption":"Area(sq-ft)","type":"numeric","condition":"eq","t1":"","t2":"","t3":""},
+        {"dbname":"t10","caption":"Address","type":"string","condition":"c","t1":"","t2":"","t3":""}
+    ],
+    "property": [
+        {"dbname":"PMS003.t1","caption":"Listing No","type":"string","condition":"c","t1":"","t2":"","t3":""},
+        {"dbname":"PMS003.n4","caption":"Type","type":"combo001","condition":"","t1":"","t2":"","t3":""},
+        {"dbname":"PMS003.n3","caption":"Status","type":"combo003","condition":"","t1":"","t2":"","t3":""},
+        {"dbname":"PMS003.t33","caption":"User","type":"combo002","condition":"","t1":"","t2":"","t3":""},
+        {"dbname":"PMS003.t2","caption":"Available From","type":"date","condition":"eq","t1":"","t2":"","t3":""},
+        {"dbname":"PMS003.t24","caption":"Area(sq-ft)","type":"string","condition":"c","t1":"","t2":"","t3":""}
+    ]
+}
+

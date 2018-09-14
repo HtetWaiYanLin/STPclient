@@ -1,0 +1,16 @@
+{
+"mainmenu" :[{"value":"","caption":""}],
+"ref001" : [{"value":"","caption":""},{"value":"1","caption":"Active"},{"value":"0","caption":"InActive"}],
+"ref002" : [{"value":"","caption":"1"},{"value":"m","caption":"r1"},{"value":"2","caption":"r2"},{"value":"g","caption":"r3"}],
+"ref003" : [{"value":"0","caption":"USD"},{"value":"1","caption":"MMK"}],
+"ref004" : [{"value":"","caption":""}],
+"ref005" : [{"value":"","caption":""}],
+"ref006" : [{"value":"","caption":""}],
+"ref007" : [{"value":"","caption":""}],
+"ref008" : [{"value":"","caption":""}],
+"ref009" : [{"value":"","caption":""}],
+"ref010" : [{"value":"","caption":""}],
+"ref011" : [{"value":"","caption":""}],
+"ref012" : [{"value":"0","caption":"Fully Furnished"},{"value":"1","caption":"Partial Furnished"},{"value":"2","caption":"Unfurnished"}],
+"ref013" : [{"value":"yes","caption":"Yes"},{"value":"no","caption":"No"}]
+}

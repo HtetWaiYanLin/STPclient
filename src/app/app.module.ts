@@ -42,11 +42,8 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-/* import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar'; */
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 import { AppComponent } from './app.component';
@@ -55,6 +52,7 @@ import { MenuComponent } from './system/menu/menu.component';
 import { UserComponent } from './system/user/user.component';
 import { RoleComponent } from './system/role/role.component';
 import { MenulistComponent } from './system/menulist/menulist.component';
+import { Reference } from './framework/reference';
 
 
 
@@ -79,7 +77,7 @@ const appRoutes: Routes = [
     MenuComponent,
     UserComponent,
     RoleComponent,
-    MenulistComponent
+    MenulistComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,8 +122,9 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    FlexLayoutModule
   ],
-  providers: [],
+  providers: [Reference],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

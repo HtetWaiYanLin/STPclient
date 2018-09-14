@@ -6,8 +6,6 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 
-
-
 @Component({
   selector: 'app-menulist',
   templateUrl: './menulist.component.html',

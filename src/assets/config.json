@@ -1,0 +1,6 @@
+{
+"appname" : "Ng Training",
+"title" : "NgTraining version 1.0.5", 
+"apiurl" : "http://localhost:8080/NgTrain/module001/", 
+"imageurl" : "http://localhost:8080/NgTrain/WEB-INF/upload/"
+}

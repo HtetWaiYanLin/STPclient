@@ -23,16 +23,22 @@
       </mat-select>
     </mat-form-field>
 
+
     <mat-form-field class="menu-full-width">
-      <input matInput placeholder="Menu Link">
+      <input matInput placeholder="Menu Name" [(ngModel)]="_obj.t1" name="menuname">
     </mat-form-field>
 
 
     <mat-form-field class="menu-full-width">
-      <input matInput placeholder="Menu Name">
+      <input matInput placeholder="Menu Link" [(ngModel)]="_obj.t2" name="menulink">
     </mat-form-field>
+
+
+
+
+
   </form>
 
-
+  <p>{{_obj | json}}</p>
 
 </div>
