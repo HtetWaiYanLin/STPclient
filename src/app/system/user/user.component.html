@@ -1,6 +1,6 @@
 <div class="menu-container">
 
-  <h3>User</h3>
+  <h4>User</h4>
   <div class="button-row">
     <button mat-raised-button color="primary">New</button>
     <button mat-raised-button color="primary">Save</button>
@@ -11,7 +11,7 @@
 
   <form class="menu-form">
 
-    <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="1.5%">
+    <div class="container" fxLayout="row" fxLayout.xs="column"  fxLayout.sm="column"  fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
           <mat-select placeholder="Company">
@@ -34,7 +34,7 @@
     </div>
 
 
-    <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill  fxLayoutGap="1.5%">
+    <div class="container" fxLayout="row" fxLayout.xs="column"  fxLayout.sm="column"  fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
           <input matInput placeholder="Email">
@@ -55,8 +55,8 @@
       </div>
     </div>
 
-    <div class="container" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="1.5%">
-      <div fxFlex="34%">
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"   fxFlexFill fxLayoutGap="3.5%">
+      <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
           <input matInput placeholder="Phone No">
           <mat-icon matSuffix>phone</mat-icon>
@@ -69,21 +69,23 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
+      <div fxFlex="30%">
+        <mat-radio-group>
+          <mat-radio-button value="1" color="primary">Male</mat-radio-button>
+          <mat-radio-button value="2" color="primary"> Female</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
 
-    <mat-radio-group>
-      <mat-radio-button value="1" color="primary">Male</mat-radio-button>
-      <mat-radio-button value="2" color="primary"> Female</mat-radio-button>
-    </mat-radio-group>
 
     <mat-divider class="user-divider"></mat-divider>
 
-    <h2>Role</h2>
+    <h4>Role</h4>
 
     <section class="example-section">
       <mat-checkbox class="example-margin" color="primary" name="one" [(ngModel)]="master">Masteer</mat-checkbox>
       <mat-checkbox class="example-margin" color="primary" name="two" [(ngModel)]="admin">Admin</mat-checkbox>
-      <mat-checkbox class="example-margin" color="primary" name="three" [(ngModel)]="content_writer">Content Writer</mat-checkbox>
+      <mat-checkbox class="example-margin" color="primary" name="three" [(ngModel)]="content_writer">Industry</mat-checkbox>
     </section>
 
   </form>

@@ -68,6 +68,8 @@ const appRoutes: Routes = [
   { path: 'role', component: RoleComponent },
   { path: 'rolelist', component: RoleComponent },
   { path: 'menu', component: MenuComponent },
+  { path: 'menu/:cmd', component: MenuComponent },
+  { path: 'menu/:cmd/:id', component: MenuComponent },
   { path: 'menulist', component: MenulistComponent },
   { path: 'user', component: UserComponent },
   { path: 'userlist', component: UserComponent },

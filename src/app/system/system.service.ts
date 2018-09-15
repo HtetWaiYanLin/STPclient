@@ -36,5 +36,24 @@ export class SystemService {
   }
 
 
+  /** DELETE: delete the hero from the server */
+  deleteMenu(syskey: any | number): Observable<any> {
+    const id = typeof syskey === 'number' ? syskey : syskey;
+    const url = `${this.ics._apiurl}service001/deleteMenu?syskey=${syskey}`;
+    return this.http.get(url, httpOptions).pipe(
+      tap(_ => console.log(`deleted hero id=${id}`))
+    );
+  }
+
+
+  /** GET menu by syskey. Will 404 if id not found */
+  getMenu(syskey: number): Observable<any> {
+    const url = `${this.ics._apiurl}service001/readMenu?syskey=${syskey}`;
+    return this.http.get<any>(url).pipe(
+      tap(_ => console.log(`fetched menu syskey=${syskey}`))
+    );
+  }
+
+
 
 }

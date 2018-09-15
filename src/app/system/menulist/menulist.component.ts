@@ -13,7 +13,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 })
 
 export class MenulistComponent implements OnInit {
-  displayedColumns: string[] = ['Code', 'Name', 'Link', 'Parent_Menu'];
+  displayedColumns: string[] = ['Code', 'Name', 'Link', 'Parent_Menu', 'Edit'];
   exampleDatabase: MenuList | null;
   data: GithubIssue[] = [];
 
@@ -84,6 +84,9 @@ export class MenulistComponent implements OnInit {
     this._router.navigate(['/menu']);
   }
 
+  goEntry(syskey: number) {
+    this._router.navigate(['/menu', 'read', syskey]);
+  }
 
 
 }

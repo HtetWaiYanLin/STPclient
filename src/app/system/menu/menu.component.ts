@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { SystemService } from '../system.service';
 import { Reference } from '../../framework/reference';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -18,19 +18,29 @@ export class MenuComponent implements OnInit {
     'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
   };
   _isMain = false;
-
-  constructor(public snackBar: MatSnackBar, private _router: Router, private systemservice: SystemService, private ref: Reference) {
+  selected: any;
+  constructor(public snackBar: MatSnackBar, private _router: Router, private systemservice: SystemService, private ref: Reference,
+    private activeroute: ActivatedRoute) {
+    this._obj.n2 = 1;
     this.getMainMenu();
-    this._obj.n1 = 1;
+
   }
 
   ngOnInit() {
-    this.checkMenuType(this._obj.n1);
+    this.activeroute.params.subscribe(params => {
+      const cmd = params['cmd'];
+      if (cmd != null && cmd !== '' && cmd === 'new') {
+        this.goNew();
+        this.selected = '3';
+      } else if (cmd != null && cmd !== '' && cmd === 'read') {
+        const syskey = params['id'];
+        this.goGet(syskey);
+      } else {
+        this.goNew();
+      }
+    });
   }
 
-  goList() {
-    this._router.navigate(['/menulist']);
-  }
 
   checkMenuType(data: number) {
     if (data === 1) {
@@ -60,13 +70,40 @@ export class MenuComponent implements OnInit {
     );
   }
 
-  goNew() {
+  goNew(): void {
     this._obj = {
       'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
       't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0,
       'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
     };
+    this._obj.n1 = 1;
     this.checkMenuType(this._obj.n1);
+  }
+
+  goList(): void {
+    this._router.navigate(['/menulist']);
+  }
+
+
+  goDelete(syskey: number): void {
+    this.systemservice.deleteMenu(syskey).subscribe(data => {
+      this.openSnackBar(data.msgDesc);
+      this.goNew();
+    },
+      error => { },
+      () => { });
+  }
+
+
+  goGet(syskey: number) {
+    this.systemservice.getMenu(syskey).subscribe(data => {
+      // this.openSnackBar(data.msgDesc);
+      console.log(JSON.stringify(data));
+      this._obj = data;
+      this.selected = this._obj.n2 + '';
+    },
+      error => { },
+      () => { });
   }
 
   openSnackBar(message: string) {
