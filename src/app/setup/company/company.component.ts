@@ -7,44 +7,31 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { IntercomService } from '../../framework/intercom.service';
 import { Reference } from '../../framework/reference';
-import { SystemService } from '../system.service';
-import { CompanyService } from '../../setup/company.service';
+import { CompanyService } from '../company.service';
+
+
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-company',
+  templateUrl: './company.component.html',
+  styleUrls: ['./company.component.css']
 })
-export class UserComponent implements OnInit {
-
-  minDate = new Date(1960, 0, 1);
-  maxDate = new Date(1991, 0, 1);
-
-  master = false;
-  admin = false;
-  content_writer = false;
-  user = false;
-  hide = true;
+export class CompanyComponent implements OnInit {
 
   _obj = {
     'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
     't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '', 't16': '',
-    't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': '', 'n8': 0, 'n9': 0, 'n10': 0
+    't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
   };
-  _password1: string;
-  _password2: string;
-
+  selected: any;
   imageurl: string;
   _fileName: any;
   _file: any;
   _uploadFileName: string;
 
-
-  constructor(private http: HttpClient, private systemservice: SystemService, public companyService: CompanyService,
-    public snackBar: MatSnackBar, private ics: IntercomService, public ref: Reference, private _router: Router,
-    private activeroute: ActivatedRoute) {
-    this.getCompanyName();
-    // this.imageurl = 'src/assets/images/taylor1.webp';
+  constructor(private http: HttpClient, private companyService: CompanyService, public snackBar: MatSnackBar,
+    private ics: IntercomService, public ref: Reference, private _router: Router, private activeroute: ActivatedRoute) {
+    // this.imageurl = this.ics._apiurl + 'file/uploadProfile';
   }
 
   ngOnInit() {
@@ -63,39 +50,35 @@ export class UserComponent implements OnInit {
 
 
   goList(): void {
-    this._router.navigate(['/userlist']);
+    this._router.navigate(['/companylist']);
   }
 
   goPost(): void {
-    if (this._password1 !== this._password2) {
-      this.openSnackBar('Password do not match!');
-    } else {
-      this._obj.t4 = this._password1;
-      const json = this._obj;
-      this.systemservice.saveUser(json).subscribe(
-        data => {
-          this.openSnackBar(data.msgDesc);
-          console.log(JSON.stringify(data));
-        },
-        error => { },
-        () => { }
-      );
-    }
+    const json = this._obj;
+    this.companyService.save(json).subscribe(
+      data => {
+        this.openSnackBar(data.msgDesc);
+        console.log(JSON.stringify(data));
+      },
+      error => { },
+      () => { }
+    );
   }
 
   goNew(): void {
     this._obj = {
       'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
       't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '',
-      't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': '', 'n8': 0,
+      't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0, 'n7': 0, 'n8': 0,
       'n9': 0, 'n10': 0
     };
-    this._password1 = '';
-    this._password2 = '';
+    this._obj.n1 = 1;
   }
 
+
+
   goDelete(syskey: number): void {
-    this.systemservice.deleteUser(syskey).subscribe(data => {
+    this.companyService.delete(syskey).subscribe(data => {
       this.openSnackBar(data.msgDesc);
       this.goNew();
     },
@@ -103,22 +86,20 @@ export class UserComponent implements OnInit {
       () => { });
   }
 
+
   goGet(syskey: number) {
-    this.systemservice.getUserBysyskey(syskey).subscribe(data => {
-      console.log('User Data  =>  ' + JSON.stringify(data));
+    this.companyService.getdataBysyskey(syskey).subscribe(data => {
+      // this.openSnackBar(data.msgDesc);
+      console.log(JSON.stringify(data));
       this._obj = data;
-      this._password1 = this._password2 = this._obj.t4;
-      this._obj.n6 = this._obj.n6 + '';
-      this._obj.n7 = this._obj.n7 + '';
-      this.imageurl = 'src/assets/images/taylor1.webp';
     },
       error => { },
       () => { });
   }
 
-  getCompanyName(): void {
-    this.companyService.getCompanyName()
-      .subscribe(menu => this.ref._lov3.companyname = menu.data);
+  getCompanyType(key: any | number) {
+    alert(key);
+
   }
 
   upload(url: string, files: File): Observable<any> {
@@ -145,7 +126,7 @@ export class UserComponent implements OnInit {
               this.openSnackBar('Upload Successful!');
               this._uploadFileName = data.fileName;
               this._fileName = '';
-              this._obj.t7 = this._uploadFileName;
+              this._obj.t6 = this._uploadFileName;
             } else {
               this.openSnackBar('Upload Unsuccessful!');
             }
@@ -160,6 +141,7 @@ export class UserComponent implements OnInit {
       this.openSnackBar('Upload File!');
     }
   }
+
 
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {

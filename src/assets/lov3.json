@@ -1,9 +1,7 @@
 {
 "mainmenu" :[{"value":"","caption":""}],
-"ref001" : [{"value":"","caption":""},{"value":"1","caption":"Active"},{"value":"0","caption":"InActive"}],
-"ref002" : [{"value":"","caption":"1"},{"value":"m","caption":"r1"},{"value":"2","caption":"r2"},{"value":"g","caption":"r3"}],
-"ref003" : [{"value":"0","caption":"USD"},{"value":"1","caption":"MMK"}],
-"ref004" : [{"value":"","caption":""}],
+"companytype" : [{"value":"","caption":""},{"value":"1","caption":"AAA"},{"value":"2","caption":"BBB"},{"value":"3","caption":"CCC"}],
+"companyname" : [{"value":"","caption":""}],
 "ref005" : [{"value":"","caption":""}],
 "ref006" : [{"value":"","caption":""}],
 "ref007" : [{"value":"","caption":""}],

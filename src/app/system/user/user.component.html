@@ -2,93 +2,106 @@
 
   <h4>User</h4>
   <div class="button-row">
-    <button mat-raised-button color="primary">New</button>
-    <button mat-raised-button color="primary">Save</button>
-    <button mat-raised-button color="accent">Delete</button>
+    <button mat-raised-button color="primary" (click)="goNew();">New</button>
+    <button mat-raised-button color="primary" (click)="goPost();">Save</button>
+    <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);">Delete</button>
     <button mat-raised-button color="primary" (click)="goList()">List</button>
   </div>
 
 
   <form class="menu-form">
-
-    <div class="container" fxLayout="row" fxLayout.xs="column"  fxLayout.sm="column"  fxFlexFill fxLayoutGap="3.5%">
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <mat-select placeholder="Company">
-            <mat-option value="option">Hello Today</mat-option>
-            <mat-option value="option">Team 24</mat-option>
+          <mat-select placeholder="Company" [(ngModel)]="_obj.n7" name="company">
+            <mat-option *ngFor="let item of ref._lov3.companyname" value={{item.value}}>{{item.caption}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Username">
+          <input matInput placeholder="Username" [(ngModel)]="_obj.t1" name="username">
         </mat-form-field>
       </div>
+
       <div fxFlex="30%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Full Name">
+          <input matInput placeholder="Full Name" [(ngModel)]="_obj.t2" name="fullname">
         </mat-form-field>
-
       </div>
     </div>
 
 
-    <div class="container" fxLayout="row" fxLayout.xs="column"  fxLayout.sm="column"  fxFlexFill fxLayoutGap="3.5%">
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Email">
+          <input matInput placeholder="Email" [(ngModel)]="_obj.t3" name="email">
           <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
       </div>
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Password">
+          <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" [(ngModel)]="_password1" name="password">
           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
         </mat-form-field>
       </div>
       <div fxFlex="30%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Confirm Password">
+          <input matInput placeholder="Confirm Password" [type]="hide ? 'password' : 'text'" [(ngModel)]="_password2"
+            name="confirmpassord">
           <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
         </mat-form-field>
       </div>
     </div>
 
-    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"   fxFlexFill fxLayoutGap="3.5%">
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Phone No">
+          <input matInput placeholder="Phone No" [(ngModel)]="_obj.t5" name="phone">
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
       </div>
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="D.O.B">
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="D.O.B" [(ngModel)]="_obj.t6"
+            name="dob">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
       <div fxFlex="30%">
-        <mat-radio-group>
+        <mat-radio-group [(ngModel)]="_obj.n6" name="geender" class="gender">
           <mat-radio-button value="1" color="primary">Male</mat-radio-button>
           <mat-radio-button value="2" color="primary"> Female</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
 
-
-    <mat-divider class="user-divider"></mat-divider>
-
-    <h4>Role</h4>
-
-    <section class="example-section">
-      <mat-checkbox class="example-margin" color="primary" name="one" [(ngModel)]="master">Masteer</mat-checkbox>
-      <mat-checkbox class="example-margin" color="primary" name="two" [(ngModel)]="admin">Admin</mat-checkbox>
-      <mat-checkbox class="example-margin" color="primary" name="three" [(ngModel)]="content_writer">Industry</mat-checkbox>
-    </section>
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="0%">
+      <div fxFlex="35%" class="imagecard">
+        <mat-card class="example-card">
+          <img mat-card-image [src]="imageurl" onerror="src='src/assets/images/noimage.png'">
+          <mat-card-actions>
+            <input type="file" id="imageUpload"  (change)="uploadedFile($event)"
+              placeholder="Upload file..." />
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div fxFlex="35%">
+        <h4 color = "primary">Role</h4>
+        <section class="example-section">
+          <mat-checkbox class="example-margin" color="primary" name="master" [(ngModel)]="master">Master</mat-checkbox>
+          <mat-checkbox class="example-margin" color="primary" name="admin" [(ngModel)]="admin">Admin</mat-checkbox>
+          <mat-checkbox class="example-margin" color="primary" name="content_writer" [(ngModel)]="content_writer">Industry</mat-checkbox>
+          <mat-checkbox class="example-margin" color="primary" name="user" [(ngModel)]="user">User</mat-checkbox>
+        </section>
+      </div>
+    </div>
 
   </form>
+
+
+  <!-- <pre>{{_obj | json}}</pre> -->
 
 
 </div>

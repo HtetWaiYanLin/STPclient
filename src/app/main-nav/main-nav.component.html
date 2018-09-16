@@ -1,9 +1,15 @@
-<mat-toolbar color="primary" class="navbar-header mat-elevation-z6 app-header">
+<mat-toolbar color="primary" class="fixed-header mat-elevation-z6 app-header">
+
   <a mat-button routerLink=".">STP</a>
 
-  <button mat-icon-button [matMenuTriggerFor]="setup1">
+  <a mat-button [matMenuTriggerFor]="setup1">
     Setup
-  </button>
+  </a>
+
+  <a mat-button [matMenuTriggerFor]="createjob">
+      Jobs
+  </a>
+
 
   <ul *ngFor="let obj of menudata">
     <li *ngFor="let parent_menu of obj.parent_menu">
@@ -45,18 +51,24 @@
 </mat-menu>
 
 <mat-menu #setup1="matMenu">
-  <button mat-menu-item>
+  <a mat-menu-item routerLink="/company">
     <mat-icon>business</mat-icon>
     <span>Company</span>
-  </button>
-  <button mat-menu-item>
+  </a>
+  <a mat-menu-item>
     <mat-icon>menu</mat-icon>
     <span>Township</span>
-  </button>
+  </a>
+</mat-menu>
+
+<mat-menu #createjob="matMenu">
+    <a mat-menu-item routerLink="/cretejob">
+      <mat-icon>job</mat-icon>
+      <span>Create Jobs</span>
+    </a>
 </mat-menu>
 
 <mat-menu #setup="matMenu">
-
   <button mat-menu-item *ngFor="let obj of menudata">
     <mat-icon>{{obj.icon_name}}</mat-icon>
     <span>{{obj.name}}</span>

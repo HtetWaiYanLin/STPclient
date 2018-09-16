@@ -5,17 +5,16 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
-
 @Component({
-  selector: 'app-menulist',
-  templateUrl: './menulist.component.html',
-  styleUrls: ['./menulist.component.css']
+  selector: 'app-companylist',
+  templateUrl: './companylist.component.html',
+  styleUrls: ['./companylist.component.css']
 })
+export class CompanylistComponent implements OnInit {
 
-export class MenulistComponent implements OnInit {
   displayedColumns: string[] = ['Code', 'Name', 'Link', 'Parent_Menu', 'Edit'];
   exampleDatabase: MenuList | null;
-  data: GithubIssue[] = [];
+  data = [];
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -57,7 +56,7 @@ export class MenulistComponent implements OnInit {
             this._pageIndex = this.paginator.pageIndex;
           }
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getMenuList(
+          return this.exampleDatabase!.getCompanyList(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this._start, this._end);
         }),
         map(data => {
@@ -76,54 +75,24 @@ export class MenulistComponent implements OnInit {
       ).subscribe(data => this.data = data);
   }
 
-
-
-
   goNew() {
-    this._router.navigate(['/menu']);
+    this._router.navigate(['/company', 'new']);
   }
 
   goEntry(syskey: number) {
-    this._router.navigate(['/menu', 'read', syskey]);
+    this._router.navigate(['/company', 'read', syskey]);
   }
 
-
 }
 
-export interface GithubApi {
-  items: GithubIssue[];
-  total_count: number;
-}
-
-export interface GithubIssue {
-  created_at: string;
-  number: string;
-  state: string;
-  title: string;
-}
-
-/** An example database that the data source uses to retrieve data for the table. */
-export class ExampleHttpDao {
-  constructor(private http: HttpClient) { }
-
-  getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
-    const requestUrl =
-      `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page + 1}`;
-
-    return this.http.get<GithubApi>(requestUrl);
-  }
-}
 
 export class MenuList {
   constructor(private http: HttpClient) { }
 
-  getMenuList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
-    const href = 'http://localhost:8085/stpserver/module001/service001/getmenulist';
+  getCompanyList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
+    const href = 'http://localhost:8085/stpserver/module001/serviceCompany/getCompanylist';
     const requestUrl =
       `${href}?sort=${sort}&order=${order}&page=${page + 1}&start=${start}&end=${end}`;
-
     return this.http.get<any>(requestUrl);
   }
 }
-

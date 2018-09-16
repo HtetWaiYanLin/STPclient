@@ -5,8 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SystemService } from './system/system.service';
 
-
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
@@ -56,6 +54,11 @@ import { UserComponent } from './system/user/user.component';
 import { RoleComponent } from './system/role/role.component';
 import { MenulistComponent } from './system/menulist/menulist.component';
 import { Reference } from './framework/reference';
+import { CompanyComponent } from './setup/company/company.component';
+import { CompanylistComponent } from './setup/companylist/companylist.component';
+import { CompanyService } from './setup/company.service';
+import { UserlistComponent } from './system/userlist/userlist.component';
+import { RolelistComponent } from './system/rolelist/rolelist.component';
 
 
 
@@ -66,13 +69,21 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: 'role', component: RoleComponent },
-  { path: 'rolelist', component: RoleComponent },
+  { path: 'role/:cmd', component: MenuComponent },
+  { path: 'role/:cmd/:id', component: MenuComponent },
+  { path: 'rolelist', component: RolelistComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'menu/:cmd', component: MenuComponent },
   { path: 'menu/:cmd/:id', component: MenuComponent },
   { path: 'menulist', component: MenulistComponent },
   { path: 'user', component: UserComponent },
-  { path: 'userlist', component: UserComponent },
+  { path: 'user/:cmd', component: UserComponent },
+  { path: 'user/:cmd/:id', component: UserComponent },
+  { path: 'userlist', component: UserlistComponent },
+  { path: 'company', component: CompanyComponent },
+  { path: 'company/:cmd', component: CompanyComponent },
+  { path: 'company/:cmd/:id', component: CompanyComponent },
+  { path: 'companylist', component: CompanylistComponent },
 ];
 
 @NgModule({
@@ -83,6 +94,10 @@ const appRoutes: Routes = [
     UserComponent,
     RoleComponent,
     MenulistComponent,
+    CompanyComponent,
+    CompanylistComponent,
+    UserlistComponent,
+    RolelistComponent,
   ],
   imports: [
     BrowserModule,
@@ -127,9 +142,9 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
-  providers: [Reference, SystemService],
+  providers: [Reference, SystemService, CompanyService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

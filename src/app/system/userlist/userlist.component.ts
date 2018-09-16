@@ -5,17 +5,20 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
+import { Reference } from '../../framework/reference';
+import { SystemService } from '../system.service';
+
 
 @Component({
-  selector: 'app-menulist',
-  templateUrl: './menulist.component.html',
-  styleUrls: ['./menulist.component.css']
+  selector: 'app-userlist',
+  templateUrl: './userlist.component.html',
+  styleUrls: ['./userlist.component.css']
 })
+export class UserlistComponent implements OnInit {
 
-export class MenulistComponent implements OnInit {
-  displayedColumns: string[] = ['Code', 'Name', 'Link', 'Parent_Menu', 'Edit'];
-  exampleDatabase: MenuList | null;
-  data: GithubIssue[] = [];
+  displayedColumns: string[] = ['Code', 'User Name', 'Full Name', 'Email', 'Phone', 'Type', 'Company'];
+  exampleDatabase: UserList | null;
+  data = [];
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -28,13 +31,15 @@ export class MenulistComponent implements OnInit {
   _end = 10;
   _pageIndex = 1;
 
+  imageurl: string;
 
-  constructor(private http: HttpClient, private _router: Router) {
-
+  constructor(private http: HttpClient, private _router: Router, public ref: Reference, public systemservice: SystemService) {
+    this.systemservice.getCompanyName();
+    this.imageurl = 'src/assets/images/taylor1.webp';
   }
 
   ngOnInit() {
-    this.exampleDatabase = new MenuList(this.http);
+    this.exampleDatabase = new UserList(this.http);
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -57,7 +62,7 @@ export class MenulistComponent implements OnInit {
             this._pageIndex = this.paginator.pageIndex;
           }
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getMenuList(
+          return this.exampleDatabase!.getUserList(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this._start, this._end);
         }),
         map(data => {
@@ -80,50 +85,31 @@ export class MenulistComponent implements OnInit {
 
 
   goNew() {
-    this._router.navigate(['/menu']);
+    this._router.navigate(['/user', 'new']);
   }
 
   goEntry(syskey: number) {
-    this._router.navigate(['/menu', 'read', syskey]);
+    this._router.navigate(['/user', 'read', syskey]);
   }
 
-
-}
-
-export interface GithubApi {
-  items: GithubIssue[];
-  total_count: number;
-}
-
-export interface GithubIssue {
-  created_at: string;
-  number: string;
-  state: string;
-  title: string;
-}
-
-/** An example database that the data source uses to retrieve data for the table. */
-export class ExampleHttpDao {
-  constructor(private http: HttpClient) { }
-
-  getRepoIssues(sort: string, order: string, page: number): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
-    const requestUrl =
-      `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page + 1}`;
-
-    return this.http.get<GithubApi>(requestUrl);
+  getCompanyName(companykey: string) {
+    this.ref._lov3.companyname.forEach(element => {
+      if (element.value === companykey.toString()) {
+        return element.caption;
+      }
+    });
   }
+
 }
 
-export class MenuList {
+
+export class UserList {
   constructor(private http: HttpClient) { }
 
-  getMenuList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
-    const href = 'http://localhost:8085/stpserver/module001/service001/getmenulist';
+  getUserList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
+    const href = 'http://localhost:8085/stpserver/module001/serviceUser/getUserlist';
     const requestUrl =
       `${href}?sort=${sort}&order=${order}&page=${page + 1}&start=${start}&end=${end}`;
-
     return this.http.get<any>(requestUrl);
   }
 }
-

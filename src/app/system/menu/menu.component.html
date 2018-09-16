@@ -1,6 +1,6 @@
 <div class="menu-container">
 
-  <h3>Menu</h3>
+  <h4>Menu</h4>
   <div class="button-row">
     <button mat-raised-button color="primary" (click)="goNew();">New</button>
     <button mat-raised-button color="primary" (click)="goPost();">Save</button>
@@ -15,14 +15,6 @@
       <mat-radio-button [value]=2 color="primary"> Child Menu</mat-radio-button>
     </mat-radio-group>
 
-    <!-- <mat-form-field class="menu-full-width" *ngIf="_obj.n1==2">
-        <mat-option>None</mat-option>
-      <mat-select  [(value)]="_obj.n2" #customerFilter>
-        <mat-select-trigger>{{customerFilter.selected?.viewValue||'All'}}</mat-select-trigger> 
-        <mat-option *ngFor="let item of ref._lov3.mainmenu" value={{item.value}}>{{item.caption}}</mat-option>
-      </mat-select>
-    </mat-form-field> -->
-
      <mat-form-field class="menu-full-width" *ngIf="_obj.n1==2">
         <mat-select [(value)]="selected">
           <mat-option value="3">-----</mat-option>
@@ -30,9 +22,6 @@
         </mat-select>
       </mat-form-field>
       
-      <p>You selected: {{selected}}</p>
-
-    <p>{{testdata}}</p>
     <mat-form-field class="menu-full-width">
       <input matInput placeholder="Menu Link" [(ngModel)]="_obj.t1" [disabled]="_isMain" name="menulink">
     </mat-form-field>
@@ -40,11 +29,6 @@
     <mat-form-field class="menu-full-width">
       <input matInput placeholder="Menu Name" [(ngModel)]="_obj.t2" name="menuname">
     </mat-form-field>
-
-
-
-
-
 
 
 
