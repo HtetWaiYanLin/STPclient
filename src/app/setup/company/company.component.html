@@ -13,7 +13,7 @@
     <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="ID" [(ngModel)]="_obj.t1" disabled name="comId">
+          <input matInput placeholder="ID" [(ngModel)]="_obj.syskey" disabled name="comId">
         </mat-form-field>
       </div>
       <div fxFlex="35%">
@@ -34,7 +34,7 @@
 
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <mat-select placeholder="Type" [(value)]="selected" [(ngModel)]="_obj.t3" name="companytype" (ngModelChange)="getCompanyType($event)">
+          <mat-select placeholder="Type" [(ngModel)]="_obj.t3" name="companytype" >
             <mat-option *ngFor="let item of ref._lov3.companytype" [value]=item.value>{{item.caption}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -78,5 +78,5 @@
     <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
   </mat-file-upload-queue> -->
 
-  <pre>{{_obj | json}}</pre>
+  <!-- <pre>{{_obj | json}}</pre> -->
 </div>

@@ -31,19 +31,19 @@ export class CompanyService {
     const id = typeof syskey === 'number' ? syskey : syskey;
     const url = `${this.ics._apiurl}serviceCompany/deleteMenu?syskey=${syskey}`;
     return this.http.get(url, httpOptions).pipe(
-      tap(_ => console.log(`deleted hero id=${id}`))
+      tap(_ => console.log(`deleted company id=${id}`))
     );
   }
 
   getdataBysyskey(syskey: number): Observable<any> {
-    const url = `${this.ics._apiurl}serviceCompany/readMenu?syskey=${syskey}`;
+    const url = `${this.ics._apiurl}serviceCompany/readComapany?syskey=${syskey}`;
     return this.http.get<any>(url).pipe(
-      tap(_ => console.log(`fetched menu syskey=${syskey}`))
+      tap(_ => console.log(`fetched company syskey=${syskey}`))
     );
   }
 
   getCompanyName(): Observable<any> {
-    return this.http.get<any>('http://localhost:8085/stpserver/module001/serviceCompany/getCompanyName')
+    return this.http.get<any>(`${this.ics._apiurl}serviceCompany/getCompanyName`)
       .pipe(
         tap(response => console.log('fetched companyName ${response}'))
       );

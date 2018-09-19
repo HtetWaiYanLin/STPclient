@@ -1,0 +1,31 @@
+<div fxLayout="column" fxLayoutAlign="center center">
+  <mat-card class="example-card">
+
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img src="src/assets/images/favicon.png" class="loginheader">
+    </div>
+
+
+    <mat-card-content>
+      <form class="login-form">
+        <mat-form-field class="login-full-width">
+          <input matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+        </mat-form-field>
+
+        <mat-form-field class="login-full-width">
+          <input matInput placeholder="Password" [(ngModel)]="password" type="password" name="password" required>
+        </mat-form-field>
+      </form>
+
+      <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <button mat-raised-button type="submit" (click)="login()" color="primary">Login</button>
+      </div>
+    </mat-card-actions>
+
+  </mat-card>
+</div>

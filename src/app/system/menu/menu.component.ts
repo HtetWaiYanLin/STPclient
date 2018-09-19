@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
+import { IntercomService } from '../../framework/intercom.service';
 import { SystemService } from '../system.service';
 import { Reference } from '../../framework/reference';
 
@@ -19,8 +20,13 @@ export class MenuComponent implements OnInit {
   };
   _isMain = false;
   selected: any;
-  constructor(public snackBar: MatSnackBar, private _router: Router, private systemservice: SystemService, private ref: Reference,
+  constructor(private ics: IntercomService, public snackBar: MatSnackBar, private _router: Router,
+    private systemservice: SystemService, private ref: Reference,
     private activeroute: ActivatedRoute) {
+    this.ics.rpbean$.subscribe(x => { });
+    if (!ics.getRole() || ics.getRole() === 0) {
+      this._router.navigate(['/login']);
+    }
     this._obj.n2 = 1;
     this.getMainMenu();
 

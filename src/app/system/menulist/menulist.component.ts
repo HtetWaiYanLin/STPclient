@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-
+import { IntercomService } from '../../framework/intercom.service';
 
 @Component({
   selector: 'app-menulist',
@@ -29,12 +29,15 @@ export class MenulistComponent implements OnInit {
   _pageIndex = 1;
 
 
-  constructor(private http: HttpClient, private _router: Router) {
-
+  constructor(private ics: IntercomService, private http: HttpClient, private _router: Router) {
+    ics.rpbean$.subscribe(x => { });
+    if (!ics.getRole() || ics.getRole() === 0) {
+      this._router.navigate(['/login']);
+    }
   }
 
   ngOnInit() {
-    this.exampleDatabase = new MenuList(this.http);
+    this.exampleDatabase = new MenuList(this.http, this.ics);
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -116,10 +119,9 @@ export class ExampleHttpDao {
 }
 
 export class MenuList {
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient, private ics: IntercomService) { }
   getMenuList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
-    const href = 'http://localhost:8085/stpserver/module001/service001/getmenulist';
+    const href = `${this.ics._apiurl}service001/getmenulist`;
     const requestUrl =
       `${href}?sort=${sort}&order=${order}&page=${page + 1}&start=${start}&end=${end}`;
 

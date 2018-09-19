@@ -1,13 +1,13 @@
 <mat-toolbar color="primary" class="fixed-header mat-elevation-z6 app-header">
 
-  <a mat-button routerLink=".">STP</a>
+  <a mat-button routerLink="."> STP</a>
 
   <a mat-button [matMenuTriggerFor]="setup1">
     Setup
   </a>
 
   <a mat-button [matMenuTriggerFor]="createjob">
-      Jobs
+    Jobs
   </a>
 
 
@@ -26,9 +26,14 @@
   <span class="example-fill-remaining-space"></span>
 
 
+
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>apps</mat-icon>
   </button>
+
+  <a mat-icon-button routerLink="/login">
+    <mat-icon>logout</mat-icon>
+  </a>
 
 
 </mat-toolbar>
@@ -62,10 +67,14 @@
 </mat-menu>
 
 <mat-menu #createjob="matMenu">
-    <a mat-menu-item routerLink="/cretejob">
-      <mat-icon>job</mat-icon>
-      <span>Create Jobs</span>
-    </a>
+  <a mat-menu-item routerLink="/createjobs">
+    <mat-icon>business_center</mat-icon>
+    <span>Create Jobs</span>
+  </a>
+  <a mat-menu-item>
+    <mat-icon>menu</mat-icon>
+    <span>Job List</span>
+  </a>
 </mat-menu>
 
 <mat-menu #setup="matMenu">

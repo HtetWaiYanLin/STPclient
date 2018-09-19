@@ -28,7 +28,7 @@ export class SystemService {
   }
   /** GET mainMenu from the server */
   getmainMenu(): Observable<any> {
-    return this.http.get<any>('http://localhost:8085/stpserver/module001/service001/getMainMenuList')
+    return this.http.get<any>('${this.ics._apiurl}/service001/getMainMenuList')
       .pipe(
         tap(response => console.log('fetched mainmenu ${response}'))
       );

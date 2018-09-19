@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { IntercomService } from '../../framework/intercom.service';
 import { Reference } from '../../framework/reference';
@@ -19,11 +19,10 @@ import { CompanyService } from '../company.service';
 export class CompanyComponent implements OnInit {
 
   _obj = {
-    'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
+    'syskey': '', 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
     't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '', 't16': '',
-    't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+    't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
   };
-  selected: any;
   imageurl: string;
   _fileName: any;
   _file: any;
@@ -32,6 +31,10 @@ export class CompanyComponent implements OnInit {
   constructor(private http: HttpClient, private companyService: CompanyService, public snackBar: MatSnackBar,
     private ics: IntercomService, public ref: Reference, private _router: Router, private activeroute: ActivatedRoute) {
     // this.imageurl = this.ics._apiurl + 'file/uploadProfile';
+    ics.rpbean$.subscribe(x => { });
+    if (!ics.getRole() || ics.getRole() === 0) {
+      this._router.navigate(['/login']);
+    }
   }
 
   ngOnInit() {
@@ -67,12 +70,11 @@ export class CompanyComponent implements OnInit {
 
   goNew(): void {
     this._obj = {
-      'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
+      'syskey': '', 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
       't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '',
-      't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0, 'n7': 0, 'n8': 0,
+      't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': 0, 'n8': 0,
       'n9': 0, 'n10': 0
     };
-    this._obj.n1 = 1;
   }
 
 
@@ -89,18 +91,14 @@ export class CompanyComponent implements OnInit {
 
   goGet(syskey: number) {
     this.companyService.getdataBysyskey(syskey).subscribe(data => {
-      // this.openSnackBar(data.msgDesc);
-      console.log(JSON.stringify(data));
       this._obj = data;
+      this._obj.t3 = this._obj.t3 + '';
     },
       error => { },
       () => { });
   }
 
-  getCompanyType(key: any | number) {
-    alert(key);
 
-  }
 
   upload(url: string, files: File): Observable<any> {
     const fd = new FormData();

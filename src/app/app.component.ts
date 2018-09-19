@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
 
 import { IntercomService } from './framework/intercom.service';
 import { Reference } from './framework/reference';
@@ -18,15 +16,21 @@ import { Reference } from './framework/reference';
 export class AppComponent {
 
   myData: any;
-  constructor(private http: HttpClient, private _router: Router, private ics: IntercomService, private title: Title,
+  showmenu: boolean;
+
+  constructor(private http: HttpClient, private ics: IntercomService, private title: Title,
     private ref: Reference) {
+    this.showmenu = false;
     this.getAppinfo();
     this.getMockData1();
+    ics.rpbean$.subscribe(x => {
+      this.showmenu = ics.isMenuBar();
+    });
+
   }
 
   getAppinfo(): void {
     this.getAppdata().subscribe(data => {
-      console.log(JSON.stringify('Server Data ' + data));
       this.myData = data;
       this.ics._title = this.myData.title;
       this.ics._appname = this.myData.appname;

@@ -59,15 +59,19 @@ import { CompanylistComponent } from './setup/companylist/companylist.component'
 import { CompanyService } from './setup/company.service';
 import { UserlistComponent } from './system/userlist/userlist.component';
 import { RolelistComponent } from './system/rolelist/rolelist.component';
+import { CreatejobComponent } from './jobs/createjob/createjob.component';
+import { JoblistComponent } from './jobs/joblist/joblist.component';
+import { LoginComponent } from './login/login.component';
 
 
 
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/menu',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
+  { path: 'login', component: LoginComponent },
   { path: 'role', component: RoleComponent },
   { path: 'role/:cmd', component: MenuComponent },
   { path: 'role/:cmd/:id', component: MenuComponent },
@@ -84,6 +88,10 @@ const appRoutes: Routes = [
   { path: 'company/:cmd', component: CompanyComponent },
   { path: 'company/:cmd/:id', component: CompanyComponent },
   { path: 'companylist', component: CompanylistComponent },
+  { path: 'createjobs', component: CreatejobComponent },
+  { path: 'createjobs/:cmd', component: CreatejobComponent },
+  { path: 'createjobs/:cmd/:id', component: CreatejobComponent },
+  { path: 'joblist', component: JoblistComponent },
 ];
 
 @NgModule({
@@ -98,6 +106,9 @@ const appRoutes: Routes = [
     CompanylistComponent,
     UserlistComponent,
     RolelistComponent,
+    CreatejobComponent,
+    JoblistComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

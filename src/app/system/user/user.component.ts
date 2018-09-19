@@ -43,6 +43,10 @@ export class UserComponent implements OnInit {
   constructor(private http: HttpClient, private systemservice: SystemService, public companyService: CompanyService,
     public snackBar: MatSnackBar, private ics: IntercomService, public ref: Reference, private _router: Router,
     private activeroute: ActivatedRoute) {
+    this.ics.rpbean$.subscribe(x => { });
+    if (!ics.getRole() || ics.getRole() === 0) {
+      this._router.navigate(['/login']);
+    }
     this.getCompanyName();
     // this.imageurl = 'src/assets/images/taylor1.webp';
   }
@@ -75,7 +79,6 @@ export class UserComponent implements OnInit {
       this.systemservice.saveUser(json).subscribe(
         data => {
           this.openSnackBar(data.msgDesc);
-          console.log(JSON.stringify(data));
         },
         error => { },
         () => { }
@@ -105,7 +108,6 @@ export class UserComponent implements OnInit {
 
   goGet(syskey: number) {
     this.systemservice.getUserBysyskey(syskey).subscribe(data => {
-      console.log('User Data  =>  ' + JSON.stringify(data));
       this._obj = data;
       this._password1 = this._password2 = this._obj.t4;
       this._obj.n6 = this._obj.n6 + '';

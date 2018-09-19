@@ -7,7 +7,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 
 import { Reference } from '../../framework/reference';
 import { SystemService } from '../system.service';
-
+import { IntercomService } from '../../framework/intercom.service';
 
 @Component({
   selector: 'app-userlist',
@@ -33,13 +33,18 @@ export class UserlistComponent implements OnInit {
 
   imageurl: string;
 
-  constructor(private http: HttpClient, private _router: Router, public ref: Reference, public systemservice: SystemService) {
+  constructor(private http: HttpClient, private _router: Router, public ref: Reference, public systemservice: SystemService,
+    private ics: IntercomService) {
+    ics.rpbean$.subscribe(x => { });
+    if (!ics.getRole() || ics.getRole() === 0) {
+      this._router.navigate(['/login']);
+    }
     this.systemservice.getCompanyName();
     this.imageurl = 'src/assets/images/taylor1.webp';
   }
 
   ngOnInit() {
-    this.exampleDatabase = new UserList(this.http);
+    this.exampleDatabase = new UserList(this.http, this.ics);
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -104,10 +109,10 @@ export class UserlistComponent implements OnInit {
 
 
 export class UserList {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private ics: IntercomService) { }
 
   getUserList(sort: string, order: string, page: number, start: number, end: number): Observable<any> {
-    const href = 'http://localhost:8085/stpserver/module001/serviceUser/getUserlist';
+    const href = `${this.ics._apiurl}serviceUser/getUserlist`;
     const requestUrl =
       `${href}?sort=${sort}&order=${order}&page=${page + 1}&start=${start}&end=${end}`;
     return this.http.get<any>(requestUrl);
