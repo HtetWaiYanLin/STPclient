@@ -19,11 +19,11 @@ export class SystemService {
   constructor(private http: HttpClient, private ics: IntercomService, private ref: Reference, public companyService: CompanyService) { }
 
 
-  /** POST: add a new hero to the server */
+  /** POST: add a new menu to the server */
   saveMenu(data: any): Observable<any> {
     return this.http.post<any>(this.ics._apiurl + 'service001/saveMenu', data, httpOptions).pipe(
-      tap((hero: any) =>
-        console.log(hero))
+      tap((response: any) =>
+        console.log(response))
     );
   }
   /** GET mainMenu from the server */
@@ -33,7 +33,7 @@ export class SystemService {
         tap(response => console.log('fetched mainmenu ${response}'))
       );
   }
-  /** DELETE: delete the hero from the server */
+  /** DELETE: delete the menu from the server */
   deleteMenu(syskey: any | number): Observable<any> {
     const id = typeof syskey === 'number' ? syskey : syskey;
     const url = `${this.ics._apiurl}service001/deleteMenu?syskey=${syskey}`;
@@ -77,8 +77,34 @@ export class SystemService {
     this.companyService.getCompanyName()
       .subscribe(menu => this.ref._lov3.companyname = menu.data);
   }
-
-
   /*  End User  */
+
+
+
+  /*  Start Role  */
+  saveRole(data: any): Observable<any> {
+    return this.http.post<any>(this.ics._apiurl + 'serviceRole/saveRole', data, httpOptions).pipe(
+      tap((response: any) =>
+        console.log(response))
+    );
+  }
+
+  deleteRole(syskey: any | number): Observable<any> {
+    const id = typeof syskey === 'number' ? syskey : syskey;
+    const url = `${this.ics._apiurl}serviceRole/deleteRole?syskey=${syskey}`;
+    return this.http.get(url, httpOptions).pipe(
+      tap(_ => console.log(`dekete role id=${id}`))
+    );
+  }
+
+  getRoleBysyskey(syskey: number): Observable<any> {
+    const url = `${this.ics._apiurl}serviceRole/readRole?syskey=${syskey}`;
+    return this.http.get<any>(url).pipe(
+      tap(_ => console.log(`fetched role syskey=${syskey}`))
+    );
+  }
+
+
+  /*  End Role  */
 
 }

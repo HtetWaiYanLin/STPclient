@@ -50,10 +50,10 @@ export class MenuComponent implements OnInit {
 
   checkMenuType(data: number) {
     if (data === 1) {
-      this._obj.t1 = '/stp';
+      this._obj.t2 = '/stp';
       this._isMain = true;
     } else if (data === 2) {
-      this._obj.t1 = '';
+      this._obj.t2 = '';
       this._isMain = false;
     }
   }
@@ -103,7 +103,7 @@ export class MenuComponent implements OnInit {
 
   goGet(syskey: number) {
     this.systemservice.getMenu(syskey).subscribe(data => {
-      // this.openSnackBar(data.msgDesc);
+
       console.log(JSON.stringify(data));
       this._obj = data;
       this.selected = this._obj.n2 + '';

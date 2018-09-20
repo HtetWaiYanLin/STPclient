@@ -2,20 +2,25 @@
 
   <h4>Role</h4>
   <div class="button-row">
-    <button mat-raised-button color="primary">New</button>
-    <button mat-raised-button color="primary">Save</button>
-    <button mat-raised-button color="accent">Delete</button>
-    <button mat-raised-button color="primary">List</button>
+    <button mat-raised-button color="primary" (click)="goNew();">New</button>
+    <button mat-raised-button color="primary" (click)="goPost();" [disabled]="rolenameFormControl.hasError('required')">Save</button>
+    <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);" [disabled]="_isDelete">Delete</button>
+    <button mat-raised-button color="primary" (click)="goList()">List</button>
   </div>
 
 
   <form class="menu-form">
     <mat-form-field class="menu-full-width">
-      <input matInput placeholder="Code">
+      <input matInput placeholder="Code" [(ngModel)]="_obj.t1" disabled name="rolecode">
     </mat-form-field>
-
     <mat-form-field class="menu-full-width">
-      <input matInput placeholder="Role Name">
+      <input matInput placeholder="Role Name" [(ngModel)]="_obj.t2" name="rolename" [formControl]="rolenameFormControl"
+        [errorStateMatcher]="matcher">
+      <mat-error *ngIf="rolenameFormControl.hasError('required')">
+        Role Name is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
   </form>
+
+  <!-- <pre>{{_obj | json}}</pre> -->
 </div>
