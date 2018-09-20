@@ -22,5 +22,27 @@
     </mat-form-field>
   </form>
 
+  <div>
+    <h4 color="primary">Menu</h4>
+  </div>
+
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let parentmenu of Menu_Data.menu let i=index">
+      <div *ngIf="parentmenu.syskey!=0">
+        <mat-checkbox class="example-margin" color="primary" [(ngModel)]="parentmenu.result" (change)="getParentValue(i,parentmenu.syskey,$event)">
+          {{parentmenu.t3}}</mat-checkbox>
+      </div>
+      <mat-icon color="primary"> label_important</mat-icon>
+      <mat-list-item role="listitem" *ngFor="let child of parentmenu.childmenus let j=index">
+        <mat-checkbox class="example-margin" color="primary" [(ngModel)]="child.result" (change)="getChildValue(i,j,$event)" >
+          {{child.t3}}</mat-checkbox>
+      </mat-list-item>
+    </mat-list-item>
+  </mat-list>
+
+
+
+
+  <pre>{{Menu_Data | json}}</pre>
   <!-- <pre>{{_obj | json}}</pre> -->
 </div>

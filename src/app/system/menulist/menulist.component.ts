@@ -13,7 +13,7 @@ import { IntercomService } from '../../framework/intercom.service';
 })
 
 export class MenulistComponent implements OnInit {
-  displayedColumns: string[] = ['Code', 'Name', 'Link', 'Parent_Menu'];
+  displayedColumns: string[] = ['No', 'Code', 'Name', 'link'];
   exampleDatabase: MenuList | null;
   data: GithubIssue[] = [];
 

@@ -17,30 +17,25 @@
     <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="Name" matSortDisableClear
       matSortDirection="asc">
 
-      <ng-container matColumnDef="Code">
-        <th mat-header-cell *matHeaderCellDef>#</th>
+      <ng-container matColumnDef="No">
+        <th mat-header-cell *matHeaderCellDef>System Key</th>
         <td mat-cell *matCellDef="let row" (click)="goEntry(row.syskey)">{{row.syskey}} </td>
       </ng-container>
 
-
-      <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Name</th>
-        <td mat-cell *matCellDef="let row">{{row.t2}}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="Link">
-        <th mat-header-cell *matHeaderCellDef>Link</th>
+      <ng-container matColumnDef="Code">
+        <th mat-header-cell *matHeaderCellDef>Code</th>
         <td mat-cell *matCellDef="let row">{{row.t1}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="link">
+          <th mat-header-cell *matHeaderCellDef>Link</th>
+          <td mat-cell *matCellDef="let row">{{row.t2}}</td>
+        </ng-container>
 
-      <ng-container matColumnDef="Parent_Menu">
-        <th mat-header-cell *matHeaderCellDef>
-          Parent_Menu
-        </th>
-        <td mat-cell *matCellDef="let row"> {{row.t2}} </td>
-      </ng-container>
-
+        <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Name</th>
+            <td mat-cell *matCellDef="let row">{{row.t3}}</td>
+          </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goEntry(row.syskey)"></tr>

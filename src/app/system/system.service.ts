@@ -26,13 +26,15 @@ export class SystemService {
         console.log(response))
     );
   }
+
   /** GET mainMenu from the server */
   getmainMenu(): Observable<any> {
-    return this.http.get<any>('${this.ics._apiurl}/service001/getMainMenuList')
+    return this.http.get<any>(`${this.ics._apiurl}service001/getMainMenuList`)
       .pipe(
         tap(response => console.log('fetched mainmenu ${response}'))
       );
   }
+
   /** DELETE: delete the menu from the server */
   deleteMenu(syskey: any | number): Observable<any> {
     const id = typeof syskey === 'number' ? syskey : syskey;
@@ -104,6 +106,20 @@ export class SystemService {
     );
   }
 
+
+  getRolecombo(): Observable<any> {
+      return this.http.get<any>(`${this.ics._apiurl}serviceRole/getRoleCombo`)
+        .pipe(
+          tap(response => console.log(`fetched role combo ${response}`))
+        );
+  }
+
+  getRoleMenus(): Observable<any> {
+    return this.http.get<any>(`${this.ics._apiurl}serviceRole/getRoleMenus`)
+      .pipe(
+        tap(response => console.log(`fetched role menu data ${response}`))
+      );
+}
 
   /*  End Role  */
 

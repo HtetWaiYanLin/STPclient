@@ -15,7 +15,7 @@ import { IntercomService } from '../../framework/intercom.service';
 export class RolelistComponent implements OnInit {
 
   displayedColumns: string[] = ['No', 'Code', 'Name'];
-  exampleDatabase: RoleList | null;
+  Database: RoleList | null;
   data = [];
 
   resultsLength = 0;
@@ -38,9 +38,8 @@ export class RolelistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exampleDatabase = new RoleList(this.http, this.ics);
+    this.Database = new RoleList(this.http, this.ics);
 
-    // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
@@ -61,7 +60,7 @@ export class RolelistComponent implements OnInit {
             this._pageIndex = this.paginator.pageIndex;
           }
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getRoleList(
+          return this.Database!.getRoleList(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this._start, this._end);
         }),
         map(data => {
@@ -73,7 +72,6 @@ export class RolelistComponent implements OnInit {
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
           this.isRateLimitReached = true;
           return observableOf([]);
         })
@@ -98,7 +96,6 @@ export class RoleList {
     const href = `${this.ics._apiurl}serviceRole/getRolelist`;
     const requestUrl =
       `${href}?sort=${sort}&order=${order}&page=${page + 1}&start=${start}&end=${end}`;
-
     return this.http.get<any>(requestUrl);
   }
 }

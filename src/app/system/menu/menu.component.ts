@@ -2,9 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
 import { IntercomService } from '../../framework/intercom.service';
 import { SystemService } from '../system.service';
 import { Reference } from '../../framework/reference';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 
 @Component({
   selector: 'app-menu',
@@ -19,9 +31,15 @@ export class MenuComponent implements OnInit {
     'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
   };
   _isMain = false;
-  selected: any;
+  _isDelete = true;
+  menunameFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  matcher = new MyErrorStateMatcher();
+
+
   constructor(private ics: IntercomService, public snackBar: MatSnackBar, private _router: Router,
-    private systemservice: SystemService, private ref: Reference,
+    private systemservice: SystemService, public ref: Reference,
     private activeroute: ActivatedRoute) {
     this.ics.rpbean$.subscribe(x => { });
     if (!ics.getRole() || ics.getRole() === 0) {
@@ -37,7 +55,6 @@ export class MenuComponent implements OnInit {
       const cmd = params['cmd'];
       if (cmd != null && cmd !== '' && cmd === 'new') {
         this.goNew();
-        this.selected = '3';
       } else if (cmd != null && cmd !== '' && cmd === 'read') {
         const syskey = params['id'];
         this.goGet(syskey);
@@ -50,10 +67,18 @@ export class MenuComponent implements OnInit {
 
   checkMenuType(data: number) {
     if (data === 1) {
-      this._obj.t2 = '/stp';
+      this._obj = {
+        'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '/stp',
+        't3': '', 't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0,
+        'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+      };
       this._isMain = true;
     } else if (data === 2) {
-      this._obj.t2 = '';
+      this._obj = {
+        'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '',
+        't3': '', 't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 2, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0,
+        'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+      };
       this._isMain = false;
     }
   }
@@ -64,12 +89,19 @@ export class MenuComponent implements OnInit {
       .subscribe(menu => this.ref._lov3.mainmenu = menu.data);
   }
 
+  getRoleCombo(): void {
+    this.systemservice.getRolecombo()
+      .subscribe(role => this.ref._lov3.role = role.data);
+  }
+
   goPost(): void {
     const json = this._obj;
     this.systemservice.saveMenu(json).subscribe(
       data => {
         this.openSnackBar(data.msgDesc);
-        console.log(JSON.stringify(data));
+        if (data.state) {
+          this.goGet(data.keyResult);
+        }
       },
       error => { },
       () => { }
@@ -77,6 +109,7 @@ export class MenuComponent implements OnInit {
   }
 
   goNew(): void {
+    this._isDelete = true;
     this._obj = {
       'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
       't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0,
@@ -103,10 +136,9 @@ export class MenuComponent implements OnInit {
 
   goGet(syskey: number) {
     this.systemservice.getMenu(syskey).subscribe(data => {
-
       console.log(JSON.stringify(data));
       this._obj = data;
-      this.selected = this._obj.n2 + '';
+      this._isDelete = false;
     },
       error => { },
       () => { });

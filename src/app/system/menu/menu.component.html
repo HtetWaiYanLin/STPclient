@@ -3,8 +3,8 @@
   <h4>Menu</h4>
   <div class="button-row">
     <button mat-raised-button color="primary" (click)="goNew();">New</button>
-    <button mat-raised-button color="primary" (click)="goPost();">Save</button>
-    <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);">Delete</button>
+    <button mat-raised-button color="primary" (click)="goPost();"  [disabled]="menunameFormControl.hasError('required')">Save</button>
+    <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);" [disabled]="_isDelete" >Delete</button>
     <button mat-raised-button color="primary" (click)="goList()">List</button>
   </div>
 
@@ -20,7 +20,7 @@
     </mat-form-field>
 
      <mat-form-field class="menu-full-width" *ngIf="_obj.n1==2">
-        <mat-select [(value)]="selected">
+        <mat-select placeholder="Select Main Menu" [(ngModel)]="_obj.t4"  name= "mainmenu" >
           <mat-option *ngFor="let item of ref._lov3.mainmenu" value={{item.value}}>{{item.caption}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -30,11 +30,12 @@
     </mat-form-field>
 
     <mat-form-field class="menu-full-width">
-      <input matInput placeholder="Menu Name" [(ngModel)]="_obj.t3" name="menuname">
+      <input matInput placeholder="Menu Name" [(ngModel)]="_obj.t3" name="menuname" [formControl]="menunameFormControl"
+      [errorStateMatcher]="matcher">
+      <mat-error *ngIf="menunameFormControl.hasError('required')">
+          Menu Name is <strong>required</strong>
+        </mat-error>
     </mat-form-field>
-
-
-
   </form>
 
   <pre>{{_obj | json}}</pre>

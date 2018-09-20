@@ -36,13 +36,16 @@ export class RoleComponent implements OnInit {
   ]);
   matcher = new MyErrorStateMatcher();
 
+  Menu_Data: any;
+
   constructor(private ics: IntercomService, public snackBar: MatSnackBar, private _router: Router,
-    private systemservice: SystemService, private ref: Reference,
+    private systemservice: SystemService, public ref: Reference,
     private activeroute: ActivatedRoute) {
     this.ics.rpbean$.subscribe(x => { });
     if (!ics.getRole() || ics.getRole() === 0) {
       this._router.navigate(['/login']);
     }
+    this.getRoleMenus();
   }
 
 
@@ -97,7 +100,6 @@ export class RoleComponent implements OnInit {
       () => { });
   }
 
-
   goGet(syskey: number) {
     this.systemservice.getRoleBysyskey(syskey).subscribe(data => {
       this._obj = data;
@@ -105,6 +107,42 @@ export class RoleComponent implements OnInit {
     },
       error => { },
       () => { });
+  }
+
+
+  getRoleMenus(): void {
+    this.systemservice.getRoleMenus().subscribe(data => {
+      console.log(JSON.stringify(data));
+      this.Menu_Data = data;
+    },
+      error => { },
+      () => { });
+  }
+
+  getParentValue(indexno, value, event) {
+    if (event.checked) {
+      // if parentmenu is checked,check all childmenu
+      if (this.Menu_Data.menu[indexno].childmenus !== undefined) {
+        for (let i = 0; i < this.Menu_Data.menu[indexno].childmenus.length; i++) {
+          this.Menu_Data.menu[indexno].childmenus[i].result = true;
+        }
+      }
+    } else {
+      // if parentmenu is not check, uncheck all childmenu
+      if (this.Menu_Data.menu[indexno].childmenus !== undefined) {
+        for (let i = 0; i < this.Menu_Data.menu[indexno].childmenus.length; i++) {
+          this.Menu_Data.menu[indexno].childmenus[i].result = false;
+        }
+      }
+    }
+  }
+
+  getChildValue(indexno, childindex, event) {
+    if (event.checked) {
+      // if one childmenu is checked, check its parentmenu
+      this.Menu_Data.menu[indexno].result = true;
+    } else {
+    }
   }
 
   openSnackBar(message: string) {
