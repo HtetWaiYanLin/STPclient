@@ -25,18 +25,22 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class RoleComponent implements OnInit {
 
+
   _obj = {
     'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
     't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0,
-    'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+    'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0, 'menu': []
   };
   _isDelete = true;
+
   rolenameFormControl = new FormControl('', [
     Validators.required,
   ]);
+
+
   matcher = new MyErrorStateMatcher();
 
-  Menu_Data: any;
+  // Menu_Data: any;
 
   constructor(private ics: IntercomService, public snackBar: MatSnackBar, private _router: Router,
     private systemservice: SystemService, public ref: Reference,
@@ -63,6 +67,7 @@ export class RoleComponent implements OnInit {
     });
   }
 
+
   goPost(): void {
     const json = this._obj;
     this.systemservice.saveRole(json).subscribe(
@@ -82,7 +87,7 @@ export class RoleComponent implements OnInit {
     this._obj = {
       'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
       't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0,
-      'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+      'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0, 'menu': []
     };
   }
 
@@ -112,8 +117,7 @@ export class RoleComponent implements OnInit {
 
   getRoleMenus(): void {
     this.systemservice.getRoleMenus().subscribe(data => {
-      console.log(JSON.stringify(data));
-      this.Menu_Data = data;
+      this._obj.menu = data.menu;
     },
       error => { },
       () => { });
@@ -122,16 +126,16 @@ export class RoleComponent implements OnInit {
   getParentValue(indexno, value, event) {
     if (event.checked) {
       // if parentmenu is checked,check all childmenu
-      if (this.Menu_Data.menu[indexno].childmenus !== undefined) {
-        for (let i = 0; i < this.Menu_Data.menu[indexno].childmenus.length; i++) {
-          this.Menu_Data.menu[indexno].childmenus[i].result = true;
+      if (this._obj.menu[indexno].childmenus !== undefined) {
+        for (let i = 0; i < this._obj.menu[indexno].childmenus.length; i++) {
+          this._obj.menu[indexno].childmenus[i].result = true;
         }
       }
     } else {
       // if parentmenu is not check, uncheck all childmenu
-      if (this.Menu_Data.menu[indexno].childmenus !== undefined) {
-        for (let i = 0; i < this.Menu_Data.menu[indexno].childmenus.length; i++) {
-          this.Menu_Data.menu[indexno].childmenus[i].result = false;
+      if (this._obj.menu[indexno].childmenus !== undefined) {
+        for (let i = 0; i < this._obj.menu[indexno].childmenus.length; i++) {
+          this._obj.menu[indexno].childmenus[i].result = false;
         }
       }
     }
@@ -140,7 +144,7 @@ export class RoleComponent implements OnInit {
   getChildValue(indexno, childindex, event) {
     if (event.checked) {
       // if one childmenu is checked, check its parentmenu
-      this.Menu_Data.menu[indexno].result = true;
+      this._obj.menu[indexno].result = true;
     } else {
     }
   }

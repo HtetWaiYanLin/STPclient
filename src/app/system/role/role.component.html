@@ -3,7 +3,7 @@
   <h4>Role</h4>
   <div class="button-row">
     <button mat-raised-button color="primary" (click)="goNew();">New</button>
-    <button mat-raised-button color="primary" (click)="goPost();" [disabled]="rolenameFormControl.hasError('required')">Save</button>
+    <button mat-raised-button color="primary" (click)="goPost();"  [disabled]="rolenameFormControl.hasError('required')">Save</button>
     <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);" [disabled]="_isDelete">Delete</button>
     <button mat-raised-button color="primary" (click)="goList()">List</button>
   </div>
@@ -27,7 +27,7 @@
   </div>
 
   <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let parentmenu of Menu_Data.menu let i=index">
+    <mat-list-item role="listitem" *ngFor="let parentmenu of  this._obj.menu let i=index">
       <div *ngIf="parentmenu.syskey!=0">
         <mat-checkbox class="example-margin" color="primary" [(ngModel)]="parentmenu.result" (change)="getParentValue(i,parentmenu.syskey,$event)">
           {{parentmenu.t3}}</mat-checkbox>
@@ -40,9 +40,5 @@
     </mat-list-item>
   </mat-list>
 
-
-
-
-  <pre>{{Menu_Data | json}}</pre>
-  <!-- <pre>{{_obj | json}}</pre> -->
+  <!-- <pre>{{_obj | json}}</pre>  -->
 </div>

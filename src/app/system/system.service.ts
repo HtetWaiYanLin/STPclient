@@ -117,7 +117,7 @@ export class SystemService {
   getRoleMenus(): Observable<any> {
     return this.http.get<any>(`${this.ics._apiurl}serviceRole/getRoleMenus`)
       .pipe(
-        tap(response => console.log(`fetched role menu data ${response}`))
+        tap()
       );
 }
 
