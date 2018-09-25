@@ -23,14 +23,14 @@ export class CompanyComponent implements OnInit {
     't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '', 't16': '',
     't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
   };
-  imageurl: string;
+  imageurl = '';
   _fileName: any;
   _file: any;
   _uploadFileName: string;
+  flagupload = false;
 
   constructor(private http: HttpClient, private companyService: CompanyService, public snackBar: MatSnackBar,
     private ics: IntercomService, public ref: Reference, private _router: Router, private activeroute: ActivatedRoute) {
-    // this.imageurl = this.ics._apiurl + 'file/uploadProfile';
     ics.rpbean$.subscribe(x => { });
     if (!ics.getRole() || ics.getRole() === 0) {
       this._router.navigate(['/login']);
@@ -53,7 +53,7 @@ export class CompanyComponent implements OnInit {
 
 
   goList(): void {
-    this._router.navigate(['/companylist']);
+    this._router.navigate(['/industrylist']);
   }
 
   goPost(): void {
@@ -75,6 +75,8 @@ export class CompanyComponent implements OnInit {
       't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': 0, 'n8': 0,
       'n9': 0, 'n10': 0
     };
+    this.flagupload = false;
+    this.imageurl = '';
   }
 
 
@@ -93,6 +95,8 @@ export class CompanyComponent implements OnInit {
     this.companyService.getdataBysyskey(syskey).subscribe(data => {
       this._obj = data;
       this._obj.t3 = this._obj.t3 + '';
+      this.imageurl = this.getImageURL() + this._obj.t6;
+      this.flagupload = true;
     },
       error => { },
       () => { });
@@ -125,6 +129,8 @@ export class CompanyComponent implements OnInit {
               this._uploadFileName = data.fileName;
               this._fileName = '';
               this._obj.t6 = this._uploadFileName;
+              this.flagupload = true;
+              this.imageurl = this.getImageURL() + this._obj.t6;
             } else {
               this.openSnackBar('Upload Unsuccessful!');
             }
@@ -140,6 +146,10 @@ export class CompanyComponent implements OnInit {
     }
   }
 
+
+  getImageURL() {
+    return this.ics._imageurl + 'smallImage/CompanyImage/';
+  }
 
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {

@@ -62,6 +62,8 @@ import { RolelistComponent } from './system/rolelist/rolelist.component';
 import { CreatejobComponent } from './jobs/createjob/createjob.component';
 import { JoblistComponent } from './jobs/joblist/joblist.component';
 import { LoginComponent } from './login/login.component';
+import { TownshipComponent } from './setup/township/township.component';
+import { TownshiplistComponent } from './setup/townshiplist/townshiplist.component';
 
 
 
@@ -84,14 +86,18 @@ const appRoutes: Routes = [
   { path: 'user/:cmd', component: UserComponent },
   { path: 'user/:cmd/:id', component: UserComponent },
   { path: 'userlist', component: UserlistComponent },
-  { path: 'company', component: CompanyComponent },
-  { path: 'company/:cmd', component: CompanyComponent },
-  { path: 'company/:cmd/:id', component: CompanyComponent },
-  { path: 'companylist', component: CompanylistComponent },
+  { path: 'industry', component: CompanyComponent },
+  { path: 'industry/:cmd', component: CompanyComponent },
+  { path: 'industry/:cmd/:id', component: CompanyComponent },
+  { path: 'industrylist', component: CompanylistComponent },
   { path: 'createjobs', component: CreatejobComponent },
   { path: 'createjobs/:cmd', component: CreatejobComponent },
   { path: 'createjobs/:cmd/:id', component: CreatejobComponent },
   { path: 'joblist', component: JoblistComponent },
+  { path: 'township', component: TownshipComponent },
+  { path: 'township/:cmd', component: TownshipComponent },
+  { path: 'township/:cmd/:id', component: TownshipComponent },
+  { path: 'townshiplist', component: TownshiplistComponent },
 ];
 
 @NgModule({
@@ -109,6 +115,8 @@ const appRoutes: Routes = [
     CreatejobComponent,
     JoblistComponent,
     LoginComponent,
+    TownshipComponent,
+    TownshiplistComponent,
   ],
   imports: [
     BrowserModule,

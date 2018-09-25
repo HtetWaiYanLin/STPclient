@@ -13,9 +13,8 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyService {
+export class AddressService {
   constructor(private http: HttpClient, private ics: IntercomService, private ref: Reference) { }
-
 
   save(data: any): Observable<any> {
     return this.http.post<any>(this.ics._apiurl + 'serviceCompany/saveCompany', data, httpOptions).pipe(
@@ -39,10 +38,10 @@ export class CompanyService {
     );
   }
 
-  getCompanyName(): Observable<any> {
-    return this.http.get<any>(`${this.ics._apiurl}serviceCompany/getCompanyName`)
+  getState(): Observable<any> {
+    return this.http.get<any>(`${this.ics._apiurl}serviceRole/getRoleCombo`)
       .pipe(
-        tap(response => console.log('fetched companyName ${response}'))
+        tap(response => console.log(`fetched role combo ${response}`))
       );
   }
 }

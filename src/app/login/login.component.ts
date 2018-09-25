@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       this.ics._profile.role = 50;
       this.ics.sendBean(new Bean());
       this.showSpinner = false;
-      this._router.navigate(['company']);
+      this._router.navigate(['industry']);
     } else {
       alert('Invalid Username or Password');
       this.showSpinner = false;

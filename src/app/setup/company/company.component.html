@@ -1,6 +1,6 @@
 <div class="menu-container">
 
-  <h4>Company</h4>
+  <h4>Industry</h4>
   <div class="button-row">
     <button mat-raised-button color="primary" (click)="goNew();">New</button>
     <button mat-raised-button color="primary" (click)="goPost();">Save</button>
@@ -13,7 +13,7 @@
     <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
-          <input matInput placeholder="ID" [(ngModel)]="_obj.syskey" disabled name="comId">
+          <input matInput placeholder="ID" [(ngModel)]="_obj.t1" disabled name="comId">
         </mat-form-field>
       </div>
       <div fxFlex="35%">
@@ -21,31 +21,40 @@
           <input matInput placeholder="Company Name" [(ngModel)]="_obj.t2" name="comName">
         </mat-form-field>
       </div>
+      <div fxFlex="30%" class="imagecard">
+        <mat-card class="example-card">
+          <img mat-card-image [src]="imageurl" alt="Please upload image" *ngIf="flagupload">
+          <mat-card-actions>
+            <input type="file" id="imageUpload" (change)="uploadedFile($event)" placeholder="Upload file..." />
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
       <div fxFlex="30%">
         <mat-form-field class="menu-full-width">
           <input matInput placeholder="No of Workers" [(ngModel)]="_obj.n6" name="noofworker">
         </mat-form-field>
-
+      </div>
+      <div fxFlex="30%">
+        <mat-form-field class="menu-full-width">
+          <mat-select placeholder="Select Industry Type" [(ngModel)]="_obj.t3" name="companytype">
+            <mat-option *ngFor="let item of ref._lov3.companytype" [value]=item.value>{{item.caption}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
 
 
     <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
-
-      <div fxFlex="35%">
-        <mat-form-field class="menu-full-width">
-          <mat-select placeholder="Type" [(ngModel)]="_obj.t3" name="companytype" >
-            <mat-option *ngFor="let item of ref._lov3.companytype" [value]=item.value>{{item.caption}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
       <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
           <input matInput placeholder="Email" [(ngModel)]="_obj.t4" name="email">
           <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
       </div>
-      <div fxFlex="30%">
+      <div fxFlex="35%">
         <mat-form-field class="menu-full-width">
           <input matInput placeholder="Phone No" [(ngModel)]="_obj.t5" name="phone">
           <mat-icon matSuffix>phone</mat-icon>
@@ -59,24 +68,8 @@
       </mat-form-field>
     </div>
 
-    <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
-    <div fxFlex="35%" class="imagecard">
-        <mat-card class="example-card">
-          <img mat-card-image [src]="imageurl" onerror="src='src/assets/images/noimage.png'">
-          <mat-card-actions>
-            <input type="file" id="imageUpload"  (change)="uploadedFile($event)"
-              placeholder="Upload file..." />
-          </mat-card-actions>
-        </mat-card>
-    </div>
-  </div>
 
   </form>
-
-  <!-- <input id="singleFile" type="file"  [fileUploadInputFor]="fileUploadQueue"  (change)="uploadedFile($event)" />
-  <mat-file-upload-queue #fileUploadQueue [fileAlias]="'file'" [httpUrl]="url">
-    <mat-file-upload [file]="file" [id]="i" *ngFor="let file of fileUploadQueue.files; let i = index"></mat-file-upload>
-  </mat-file-upload-queue> -->
 
   <!-- <pre>{{_obj | json}}</pre> -->
 </div>

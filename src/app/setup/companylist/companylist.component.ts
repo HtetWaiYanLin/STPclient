@@ -82,11 +82,11 @@ export class CompanylistComponent implements OnInit {
   }
 
   goNew() {
-    this._router.navigate(['/company', 'new']);
+    this._router.navigate(['/industry', 'new']);
   }
 
   goEntry(syskey: number) {
-    this._router.navigate(['/company', 'read', syskey]);
+    this._router.navigate(['/industry', 'read', syskey]);
   }
 
 }
