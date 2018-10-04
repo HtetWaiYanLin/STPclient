@@ -16,10 +16,10 @@ const httpOptions = {
 export class AddressService {
   constructor(private http: HttpClient, private ics: IntercomService, private ref: Reference) { }
 
-  save(data: any): Observable<any> {
-    return this.http.post<any>(this.ics._apiurl + 'serviceCompany/saveCompany', data, httpOptions).pipe(
-      tap((hero: any) =>
-        console.log(hero))
+  saveTownship(data: any): Observable<any> {
+    return this.http.post<any>(this.ics._apiurl + 'serviceaddress/saveTownship', data, httpOptions).pipe(
+      tap((response: any) =>
+        console.log(response))
     );
   }
 
@@ -39,9 +39,16 @@ export class AddressService {
   }
 
   getState(): Observable<any> {
-    return this.http.get<any>(`${this.ics._apiurl}serviceRole/getRoleCombo`)
+    return this.http.get<any>(`${this.ics._apiurl}serviceaddress/getDivision`)
       .pipe(
-        tap(response => console.log(`fetched role combo ${response}`))
+        tap(response => console.log(`fetched Division combo ${response}`))
+      );
+  }
+
+  getDistinct(statekey: string): Observable<any> {
+    return this.http.get<any>(`${this.ics._apiurl}serviceaddress/getDistinctbyDiv?div=${statekey}`)
+      .pipe(
+        tap(response => console.log(`fetched Distinct combo ${response}`))
       );
   }
 }

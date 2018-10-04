@@ -1,43 +1,41 @@
 <div class="menu-container">
 
-    <h4>Menu</h4>
-    <div class="button-row">
-      <button mat-raised-button color="primary" (click)="goNew();">New</button>
-      <button mat-raised-button color="primary" (click)="goPost();"  [disabled]="menunameFormControl.hasError('required')">Save</button>
-      <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);" [disabled]="_isDelete" >Delete</button>
-      <button mat-raised-button color="primary" (click)="goList()">List</button>
-    </div>
-  
-  
-    <form class="menu-form">
-      <mat-radio-group class="example-radio-group" [(ngModel)]="_obj.n1" name="childorparent" (ngModelChange)="checkMenuType(_obj.n1);">
-        <mat-radio-button [value]=1 color="primary"> Main Menu</mat-radio-button>
-        <mat-radio-button [value]=2 color="primary"> Child Menu</mat-radio-button>
-      </mat-radio-group>
-  
-      <mat-form-field class="menu-full-width">
-          <input matInput placeholder="Code" [(ngModel)]="_obj.t1" disabled name="menucode">
-      </mat-form-field>
-  
-       <mat-form-field class="menu-full-width" *ngIf="_obj.n1==2">
-          <mat-select placeholder="Select Main Menu" [(ngModel)]="_obj.t4"  name= "mainmenu" >
-            <mat-option *ngFor="let item of ref._lov3.mainmenu" value={{item.value}}>{{item.caption}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        
-      <mat-form-field class="menu-full-width">
-        <input matInput placeholder="Menu Link" [(ngModel)]="_obj.t2" [disabled]="_isMain" name="menulink">
-      </mat-form-field>
-  
-      <mat-form-field class="menu-full-width">
-        <input matInput placeholder="Menu Name" [(ngModel)]="_obj.t3" name="menuname" [formControl]="menunameFormControl"
-        [errorStateMatcher]="matcher">
-        <mat-error *ngIf="menunameFormControl.hasError('required')">
-            Menu Name is <strong>required</strong>
-          </mat-error>
-      </mat-form-field>
-    </form>
-  
-    <!-- <pre>{{_obj | json}}</pre> -->
-  
+  <h4>Township</h4>
+  <div class="button-row">
+    <button mat-raised-button color="primary" (click)="goNew();">New</button>
+    <button mat-raised-button color="primary" (click)="goPost();" [disabled]="menunameFormControl.hasError('required')">Save</button>
+    <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);" [disabled]="_isDelete">Delete</button>
+    <button mat-raised-button color="primary" (click)="goList()">List</button>
   </div>
+
+
+  <form class="menu-form">
+    <mat-form-field class="menu-full-width">
+      <mat-select placeholder="Select Region" [(ngModel)]="_obj.division" name="division" (ngModelChange)="getDistinct(_obj.division);">
+        <mat-option *ngFor="let item of ref._lov3.state" value={{item.value}}>{{item.caption}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="menu-full-width">
+      <mat-select placeholder="Select Distinct" [(ngModel)]="_obj.distric" name="distric">
+        <mat-option *ngFor="let item of ref._lov3.distinct" value={{item.value}}>{{item.caption}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="menu-full-width">
+      <input matInput placeholder="Code" [(ngModel)]="_obj.code" name="code">
+    </mat-form-field>
+
+
+    <mat-form-field class="menu-full-width">
+      <input matInput placeholder="Township" [(ngModel)]="_obj.despEng" name="township" [formControl]="menunameFormControl"
+        [errorStateMatcher]="matcher">
+      <mat-error *ngIf="menunameFormControl.hasError('required')">
+       Township is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+  </form>
+
+ <pre>{{_obj | json}}</pre> 
+
+</div>

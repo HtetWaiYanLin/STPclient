@@ -4,6 +4,7 @@
 "companytype" : [{"value":"Select Industry Type","caption":""},{"value":"1","caption":"AAA"},{"value":"2","caption":"BBB"},{"value":"3","caption":"CCC"}],
 "companyname" : [{"value":"","caption":""}],
 "state" : [{"value":"","caption":""}],
+"distinct" : [{"value":"","caption":""}],
 "ref012" : [{"value":"0","caption":"Fully Furnished"},{"value":"1","caption":"Partial Furnished"},{"value":"2","caption":"Unfurnished"}],
 "ref013" : [{"value":"yes","caption":"Yes"},{"value":"no","caption":"No"}]
 }

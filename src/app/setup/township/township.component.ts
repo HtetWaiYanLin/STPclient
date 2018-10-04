@@ -25,9 +25,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class TownshipComponent implements OnInit {
 
   _obj = {
-    'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
-    't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0,
-    'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+    'errorcode': '', 'errormessage': '', 'division': '', 'distric': '', 'township': '', 'isLocal': 0, 'despMyan': '',
+    'despEng': '', 'maxLon': '', 'minLat': '', 'minLon': '', 'maxLat': '', 'code': 'TBA'
   };
   _isMain = false;
   _isDelete = true;
@@ -44,6 +43,7 @@ export class TownshipComponent implements OnInit {
     if (!ics.getRole() || ics.getRole() === 0) {
       this._router.navigate(['/login']);
     }
+    this.getState();
 
   }
 
@@ -62,37 +62,27 @@ export class TownshipComponent implements OnInit {
   }
 
 
-  checkMenuType(data: number) {
-    if (data === 1) {
-      this._obj = {
-        'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '/stp',
-        't3': '', 't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0,
-        'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
-      };
-      this._isMain = true;
-    } else if (data === 2) {
-      this._obj = {
-        'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '',
-        't3': '', 't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 2, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0,
-        'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
-      };
-      this._isMain = false;
-    }
-  }
-
 
   getState(): void {
     this.addressservice.getState()
-      .subscribe(role => this.ref._lov3.role = role.data);
+      .subscribe(division => this.ref._lov3.state = division);
   }
+
+  getDistinct(statekey: string): void {
+    this.addressservice.getDistinct(statekey)
+      .subscribe(distinct => this.ref._lov3.distinct = distinct);
+  }
+
+
+
 
   goPost(): void {
     const json = this._obj;
-    this.addressservice.save(json).subscribe(
+    this.addressservice.saveTownship(json).subscribe(
       data => {
-        this.openSnackBar(data.msgDesc);
+        this.openSnackBar(data.errormessage);
         if (data.state) {
-          this.goGet(data.keyResult);
+          // this.goGet(data.keyResult);
         }
       },
       error => { },
@@ -103,16 +93,13 @@ export class TownshipComponent implements OnInit {
   goNew(): void {
     this._isDelete = true;
     this._obj = {
-      'syskey': 0, 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '', 't3': '',
-      't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0,
-      'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+      'errorcode': '', 'errormessage': '', 'division': '', 'distric': '', 'township': '', 'isLocal': 0, 'despMyan': '',
+      'despEng': '', 'maxLon': '', 'minLat': '', 'minLon': '', 'maxLat': '', 'code': 'TBA'
     };
-    this._obj.n1 = 1;
-    this.checkMenuType(this._obj.n1);
   }
 
   goList(): void {
-    this._router.navigate(['/menulist']);
+    this._router.navigate(['/townshiplist']);
   }
 
 
