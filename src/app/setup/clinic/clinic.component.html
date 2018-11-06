@@ -1,0 +1,132 @@
+<div class="menu-container">
+
+  <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+    <div fxFlex="50%">
+      <h4>Clinic</h4>
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="goNew();">New</button>
+        <button mat-raised-button color="primary" (click)="goPost();">Save</button>
+        <button mat-raised-button color="accent" (click)="goDelete(_obj.syskey);">Delete</button>
+        <button mat-raised-button color="primary" (click)="goList()">List</button>
+      </div>
+    </div>
+    <div fxFlex="50%" fxLayoutAlign="flex-end">
+      <qrcode  [qrdata]="myAngularxQrCode" [size]="100" [level]="'M'"></qrcode>
+    </div>
+  </div>
+
+
+
+ 
+
+  <form class="menu-form">
+
+    <fieldset class="address">
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+        <div fxFlex="20%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="ID" [(ngModel)]="_obj.t1" disabled name="ClinicId">
+          </mat-form-field>
+        </div>
+        <div fxFlex="40%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="Clinic Name" [(ngModel)]="_obj.t2" name="clinicName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="20%">
+          <mat-form-field class="menu-full-width">
+            <input  matInput placeholder="Open Time" [(ngModel)]="_obj.t3" name="opentime">
+            <mat-icon matSuffix color = "secondary" >av_timer</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex="20%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="Close Time" [(ngModel)]="_obj.t4" name="closetime">
+            <mat-icon matSuffix color = "secondary" >av_timer</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+        <div fxFlex="20%">
+          <mat-form-field class="menu-full-width">
+            <mat-select placeholder="Clinic Type" [(ngModel)]="_obj.n1" name="clinicType">
+              <mat-option *ngFor="let item of ref._lov3.clinictype" [value]=item.value>{{item.caption}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="40%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="Phone No" [(ngModel)]="_obj.t5" name="phone">
+            <span matPrefix>+95&nbsp;</span>
+            <mat-icon matSuffix color = "secondary">phone</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex="40%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="Email" [(ngModel)]="_obj.t6" name="email">
+            <mat-icon matSuffix color = "secondary">email</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+    </fieldset>
+
+
+    <fieldset class="address">
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+        <div fxFlex="30%">
+          <mat-form-field class="menu-full-width">
+            <mat-select placeholder="State/Region" [(ngModel)]="_obj.t9" name="region" (ngModelChange)="getDistrict(_obj.t9)">
+              <mat-option *ngFor="let item of stateDivision" [value]=item.value>{{item.caption}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="30%">
+          <mat-form-field class="menu-full-width">
+            <mat-select placeholder="District" [(ngModel)]="_obj.t10" name="District" (ngModelChange)="getTownship(_obj.t10)">
+              <mat-option *ngFor="let item of district" [value]=item.value>{{item.caption}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="40%">
+          <mat-form-field class="menu-full-width">
+            <mat-select placeholder="Township" [(ngModel)]="_obj.t11" name="Township">
+              <mat-option *ngFor="let item of township" [value]=item.value>{{item.caption}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+        <div fxFlex="50%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="Lat" [(ngModel)]="_obj.t7" name="lat">
+            <mat-icon matSuffix color = "secondary">place</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex="50%">
+          <mat-form-field class="menu-full-width">
+            <input matInput placeholder="Lng" [(ngModel)]="_obj.t8" name="lng">
+            <mat-icon matSuffix color = "secondary">location_on</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+          <mat-form-field class="menu-full-width">
+            <textarea matInput placeholder="YBS" [(ngModel)]="_obj.t12" name="YBS"></textarea>
+            <mat-icon matSuffix color = "secondary"> directions_bus</mat-icon>
+          </mat-form-field>
+      </div>
+
+      <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlexFill fxLayoutGap="3.5%">
+        <mat-form-field class="menu-full-width">
+          <textarea matInput placeholder="About" [(ngModel)]="_obj.t13" name="about"></textarea>
+        </mat-form-field>
+      </div>
+
+    </fieldset>
+
+  </form>
+
+  <pre>{{_obj | json}}</pre>
+</div>

@@ -65,6 +65,12 @@ import { LoginComponent } from './login/login.component';
 import { TownshipComponent } from './setup/township/township.component';
 import { TownshiplistComponent } from './setup/townshiplist/townshiplist.component';
 
+import { ClinicService } from './setup/clinic.service';
+import { ClinicComponent } from './setup/clinic/clinic.component';
+import { CliniclistComponent } from './setup/cliniclist/cliniclist.component';
+import { CommonService } from './common.service';
+
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 const appRoutes: Routes = [
@@ -98,6 +104,10 @@ const appRoutes: Routes = [
   { path: 'township/:cmd', component: TownshipComponent },
   { path: 'township/:cmd/:id', component: TownshipComponent },
   { path: 'townshiplist', component: TownshiplistComponent },
+  { path: 'clinic', component: ClinicComponent },
+  { path: 'clinic/:cmd', component: ClinicComponent },
+  { path: 'clinic/:cmd/:id', component: ClinicComponent },
+  { path: 'cliniclist', component: CliniclistComponent },
 ];
 
 @NgModule({
@@ -117,6 +127,8 @@ const appRoutes: Routes = [
     LoginComponent,
     TownshipComponent,
     TownshiplistComponent,
+    ClinicComponent,
+    CliniclistComponent,
   ],
   imports: [
     BrowserModule,
@@ -162,8 +174,9 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     FlexLayoutModule,
+    QRCodeModule,
   ],
-  providers: [Reference, SystemService, CompanyService],
+  providers: [Reference, SystemService, CompanyService , ClinicService, CommonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

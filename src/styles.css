@@ -2,6 +2,7 @@ body {
     display: block;
     margin: 0px;;
     margin-top: 60px;
+    margin-bottom: 60px;
     font-family: Roboto,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
     background: #fafafa;
     
@@ -9,4 +10,8 @@ body {
 
 h4 {
  color : #00aa8d;;
+}
+
+.mat-icon.mat-secondary {
+    color: rgba(0, 0, 0, 0.42);
 }

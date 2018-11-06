@@ -5,6 +5,7 @@
 "companyname" : [{"value":"","caption":""}],
 "state" : [{"value":"","caption":""}],
 "distinct" : [{"value":"","caption":""}],
+"clinictype" : [{"value":1,"caption":"လူမှုဖူလုံရေး ဆေးခန်း"},{"value":2,"caption":"ပြင်ပ ဆေးခန်း"},{"value":3,"caption":"အလုပ်သမား ဆေးရုံ"}],
 "ref012" : [{"value":"0","caption":"Fully Furnished"},{"value":"1","caption":"Partial Furnished"},{"value":"2","caption":"Unfurnished"}],
 "ref013" : [{"value":"yes","caption":"Yes"},{"value":"no","caption":"No"}]
 }

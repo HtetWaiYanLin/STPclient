@@ -7,33 +7,42 @@ import { tap } from 'rxjs/operators';
 
 import { IntercomService } from '../../framework/intercom.service';
 import { Reference } from '../../framework/reference';
-import { CompanyService } from '../company.service';
+import { ClinicService } from '../clinic.service';
+import { CommonService } from 'src/app/common.service';
+
 
 
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  styleUrls: ['./company.component.css']
+  selector: 'app-clinic',
+  templateUrl: './clinic.component.html',
+  styleUrls: ['./clinic.component.css']
 })
-export class CompanyComponent implements OnInit {
+export class ClinicComponent implements OnInit {
 
   _obj = {
-    'syskey': '', 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '',
-    't3': '',
+    'syskey': '', 'autokey': 0, 'created_date': '', 'modified_date': '', 'record_status': 0, 'user_syskey': 0, 't1': '', 't2': '', 't3': '',
     't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '', 't16': '',
-    't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
+    't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0, 'n7': 0, 'n8': 0, 'n9': 0, 'n10': 0
   };
   imageurl = '';
   _fileName: any;
   _file: any;
   _uploadFileName: string;
   flagupload = false;
+  stateDivision: Array<Address>;
+  district: Array<Address>;
+  township: Array<Address>;
+  myAngularxQrCode: string = null;
 
-  constructor(private http: HttpClient, private companyService: CompanyService, public snackBar: MatSnackBar,
-    private ics: IntercomService, public ref: Reference, private _router: Router, private activeroute: ActivatedRoute) {
+  constructor(private http: HttpClient, private clinicService: ClinicService, private commonService: CommonService,
+    public snackBar: MatSnackBar, private ics: IntercomService, public ref: Reference, private _router: Router,
+    private activeroute: ActivatedRoute) {
     ics.rpbean$.subscribe(x => { });
     if (!ics.getRole() || ics.getRole() === 0) {
       this._router.navigate(['/login']);
+    } else {
+      this.getState();
+      this.myAngularxQrCode = 'Your QR code data string';
     }
   }
 
@@ -58,7 +67,7 @@ export class CompanyComponent implements OnInit {
 
   goPost(): void {
     const json = this._obj;
-    this.companyService.save(json).subscribe(
+    this.clinicService.save(json).subscribe(
       data => {
         this.openSnackBar(data.msgDesc);
         console.log(JSON.stringify(data));
@@ -70,11 +79,10 @@ export class CompanyComponent implements OnInit {
 
   goNew(): void {
     this._obj = {
-      'syskey': '', 'autokey': 0, 'createddate': '', 'modifieddate': '', 'recordstatus': 0, 'usersyskey': 0, 't1': '', 't2': '',
-      't3': '',
-      't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '', 't15': '',
-      't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': '', 'n7': 0, 'n8': 0,
-      'n9': 0, 'n10': 0
+      'syskey': '', 'autokey': 0, 'created_date': '', 'modified_date': '', 'record_status': 0, 'user_syskey': 0, 't1': '', 't2': '',
+      't3': '', 't4': '', 't5': '', 't6': '', 't7': '', 't8': '', 't9': '', 't10': '', 't11': '', 't12': '', 't13': '', 't14': '',
+      't15': '', 't16': '', 't17': '', 't18': '', 't19': '', 't20': '', 'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0, 'n6': 0, 'n7': 0,
+      'n8': 0, 'n9': 0, 'n10': 0
     };
     this.flagupload = false;
     this.imageurl = '';
@@ -83,7 +91,7 @@ export class CompanyComponent implements OnInit {
 
 
   goDelete(syskey: number): void {
-    this.companyService.delete(syskey).subscribe(data => {
+    this.clinicService.delete(syskey).subscribe(data => {
       this.openSnackBar(data.msgDesc);
       this.goNew();
     },
@@ -93,9 +101,8 @@ export class CompanyComponent implements OnInit {
 
 
   goGet(syskey: number) {
-    this.companyService.getdataBysyskey(syskey).subscribe(data => {
+    this.clinicService.getdataBysyskey(syskey).subscribe(data => {
       this._obj = data;
-      this._obj.createddate = data.createddate.toString();
       this._obj.t3 = this._obj.t3 + '';
       this.imageurl = this.getImageURL() + this._obj.t6;
       this.flagupload = true;
@@ -105,6 +112,26 @@ export class CompanyComponent implements OnInit {
   }
 
 
+  getState() {
+    this.commonService.getState().subscribe(data => {
+      this.stateDivision = data;
+    }, error => { },
+      () => { });
+  }
+
+  getDistrict(key: string) {
+    this.commonService.getDistrict(key).subscribe(data => {
+      this.district = data;
+    }, error => { },
+      () => { });
+  }
+
+  getTownship(key: string) {
+    this.commonService.getTownship(key).subscribe(data => {
+      this.township = data;
+    }, error => { },
+      () => { });
+  }
 
   upload(url: string, files: File): Observable<any> {
     const fd = new FormData();
@@ -159,4 +186,11 @@ export class CompanyComponent implements OnInit {
     });
   }
 
+
+}
+
+enum Address {
+  value,
+  caption,
+  t2
 }

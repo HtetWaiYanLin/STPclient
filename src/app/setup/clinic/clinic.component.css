@@ -1,0 +1,58 @@
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  
+
+  .button-row button,
+  .button-row a {
+    margin-right: 8px;
+    margin-top: 5px;
+  }
+
+  .menu-form {
+    /* min-width: 150px;
+    max-width: 500px; */
+    width: 100%;
+    /* margin-top: 20px; */
+  }
+  
+  .menu-full-width {
+    width: 100%;
+  }
+  
+ .mat-radio-button {
+    padding-right: 16px;
+  }
+   
+
+  .mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    color:white;
+}
+
+.example-section {
+  display: flex;
+  align-content: left;
+  align-items: left;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+
+.divider {
+  margin-top:  15px;
+}
+
+
+.address {
+    margin-top:  15px;
+    border :1px solid #dedede;
+    border-radius: 5px;
+    padding: 30px;
+    box-shadow: 0 3px 0.2px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.12), 0 1px 5px 0 rgba(0,0,0,.12);
+}
